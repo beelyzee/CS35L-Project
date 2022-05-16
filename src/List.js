@@ -12,8 +12,6 @@ export default function ThreeList(props) {
     
     const listElements = getData(props.username)[props.index];
     const listCategory = getCategory(props.index);
-
-    console.log(listCategory);
     
     const items: JSX.Element[] = [];
     for (let i = 0; i < listElements.length; i++) {
@@ -21,8 +19,8 @@ export default function ThreeList(props) {
 	<Accordion>
             <AccordionSummary
 		expandIcon={<ExpandMoreIcon />}
-                aria-controls={"panel" + (i+1) + "a-content"}
-                id={"panel" + (i+1) + "a-header"}
+                aria-controls={props.username + "-list" + (props.index+1) + "-item" + (i+1) + "-content"}
+                id={props.username + "-list" + (props.index+1) + "-item" + (i+1) + "-header"}
             >
 		<header>{listElements[i]}</header>
             </AccordionSummary>

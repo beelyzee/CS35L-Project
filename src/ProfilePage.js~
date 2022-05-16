@@ -1,0 +1,17 @@
+import * as React from "react";
+import ThreeList from "./List.js";
+
+
+export default function ProfilePage(props) {
+
+    
+    console.log(props.username);
+    
+    return (
+	<div>
+	    <ThreeList username={props.username} index={0}/>
+	    <ThreeList username={props.username} index={1}/>
+	    <ThreeList username={props.username} index={2}/>
+	</div>
+    );
+}

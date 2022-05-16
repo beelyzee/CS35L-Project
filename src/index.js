@@ -7,9 +7,11 @@ import ThreeList from './List';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-    <ThreeList />
+    <React.StrictMode>
+	<App />
+	<ThreeList username={"example-user"} index={0} />
+	<ThreeList username={"example-user"} index={1} />
+	<ThreeList username={"example-user"} index={2} />
   </React.StrictMode>
 );
 

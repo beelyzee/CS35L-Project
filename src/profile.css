@@ -1,0 +1,14 @@
+.edit-items {
+  justify-content: center;
+  display:flex; 
+  flex-direction:row;
+}
+
+form {
+    margin: 50px;
+    width: 1000px;
+}
+
+h1 {
+    color: blueviolet;
+}

@@ -8,7 +8,7 @@ const Main = () => {
 	    <div>
 	        <Routes>
                     <Route path='/' element= { <Home /> } />
-	            <Route path='*' element={ <ProfilePage username={window.location.pathname.substring(1)} /> } />
+	            <Route path='*' element={ <ProfilePage username={window.location.pathname.substring(1)} /> } /> 
 	        </Routes>
 	    </div>
 

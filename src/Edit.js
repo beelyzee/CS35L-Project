@@ -2,18 +2,17 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import './edit.css'
 
-function Edit() {
-    const [text, setText] = useState("Edit")
+function Edit(props) {
     const handleClick = () => {
-        if (text === "Edit") 
-            {setText("Done")}
+        if (props.text === "Edit") 
+            {props.setText("Done")}
         else 
-            {setText("Edit")}
+            {props.setText("Edit")}
     }
     return (
         <div id="edit-button">
         <Button onClick={handleClick}> 
-            { text }
+            { props.text }
         </Button>        
         </div>
     );

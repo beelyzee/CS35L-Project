@@ -17,6 +17,11 @@ export function getCategory(index) {
     return categories[index];
 }
 
+// Return top ten (or less) ranked items in the category indicated by index
+export function getTop10(index) {
+    return profileData[0][index];
+}
+
 // Items is 2D array where each row are the recommendations for the corresponding category
 export function setData(username, items) {
     usernames.push(username);

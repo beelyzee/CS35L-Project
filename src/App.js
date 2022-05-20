@@ -1,13 +1,14 @@
 import './App.css';
 import {Routes, Route, useSearchParams} from 'react-router-dom';
 import ProfilePage from './ProfilePage.js';
+import RankingsPage from './RankingsPage.js';
 import Home from './Home.js';
 
 const Main = () => {    
     return (
 	    <div>
 	        <Routes>
-                    <Route path='/' element= { <Home /> } />
+            <Route path='/' element= { <RankingsPage num={3} /> } />
 	            <Route path='*' element={ <ProfilePage username={window.location.pathname.substring(1)} /> } />
 	        </Routes>
 	    </div>

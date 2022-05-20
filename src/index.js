@@ -4,13 +4,22 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ThreeList from './List';
+import {BrowserRouter} from 'react-router-dom';
+
+/*
+ReactDOM.render((
+  <BrowserRouter>
+    <App /> {/* The various pages will be displayed by the `Main` component.}
+  </BrowserRouter>
+  ), document.getElementById('root')
+);*/
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-    <ThreeList />
-  </React.StrictMode>
+    <BrowserRouter>
+	<App />
+    </BrowserRouter>
 );
 
 

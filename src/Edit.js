@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import './edit.css'
 
 function Edit(props) {
     const handleClick = () => {
@@ -9,12 +10,10 @@ function Edit(props) {
             {props.setText("Edit")}
     }
     return (
-        <div>
+        <div id="edit-button">
         <Button onClick={handleClick}> 
             { props.text }
         </Button>        
-        <input float="right" placeholder="Username"/>
-        <input type="password" placeholder="Password"/>
         </div>
     );
 }

@@ -8,8 +8,8 @@ const Main = () => {
     return (
 	    <div>
 	        <Routes>
-            <Route path='/' element= { <RankingsPage num={3} /> } />
-	            <Route path='*' element={ <ProfilePage username={window.location.pathname.substring(1)} /> } />
+                    <Route path='/' element= { <Home /> } />
+	            <Route path='*' element={ <ProfilePage username={window.location.pathname.substring(1)} /> } /> 
 	        </Routes>
 	    </div>
 

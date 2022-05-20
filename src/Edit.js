@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 
-function Edit() {
-    const [text, setText] = useState("Edit")
+function Edit(props) {
     const handleClick = () => {
-        if (text === "Edit") 
-            {setText("Done")}
+        if (props.text === "Edit") 
+            {props.setText("Done")}
         else 
-            {setText("Edit")}
+            {props.setText("Edit")}
     }
     return (
         <div>
         <Button onClick={handleClick}> 
-            { text }
+            { props.text }
         </Button>        
         <input float="right" placeholder="Username"/>
         <input type="password" placeholder="Password"/>

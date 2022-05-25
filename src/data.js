@@ -1,5 +1,6 @@
 import * as React from "react";
 import { getUserItemsData } from "./firebase-config.js";
+import { getCategories } from "./firebase-config.js";
 
 var usernames = [];
 var profileData = [];
@@ -12,11 +13,6 @@ export default function getData(username, category) {
 	if (usernames[i] === username) return profileData[i];
 
     return -1; */
-}
-
-// Return category
-export function getCategory(index) {
-    return categories[index];
 }
 
 // Return top ten (or less) ranked items in the category indicated by index

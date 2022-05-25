@@ -3,19 +3,27 @@ import Edit from './Edit';
 import { useState } from 'react';
 import './profile.css';
 import EditableProfile from './EditableProfile';
+import { getCategories } from './firebase-config.js';
 
 function Profile() {
 
 const [editText, setEditText] = useState("Edit");
 
+    const categories = getCategories();
+
+    const lists: JSX.Element[] = [];
+    for (let i = 0; i < categories.length; i++) {
+	lists.push(
+		<ThreeList username={"example-user"} category={categories[i]} />
+	);
+    }
+    
     if (editText === "Edit") {
         return (
             <div>
                 <Edit text={editText} setText={setEditText}/>
                 <div className='display-lists'>
-                    <ThreeList username={"example-user"} index={0} />
-                    <ThreeList username={"example-user"} index={1} />
-                    <ThreeList username={"example-user"} index={2} />
+		{lists}
                 </div>
             </div>
             );

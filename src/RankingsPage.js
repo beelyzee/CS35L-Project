@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {getCategory} from './data.js';
+import {getCategories} from './firebase-config.js';
 import {getTop10} from './data.js';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -11,13 +11,15 @@ export default function RankingsPage(props) {
 
     // input props.num is the number of categories
 
+    const categoryHeaders = getCategories();
+	  
     const categories: JSX.Element[] = [];
     for (let i = 0; i < props.num; i++) {
 
 	const items: JSX.Element[] = [];
 	
 	const listElements = getTop10(i);
-	const listCategory = getCategory(i);
+	const listCategory = categoryHeaders[i];
 	
 	for (let j = 0; j < listElements.length; j++) {
 	    // push items

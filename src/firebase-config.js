@@ -35,7 +35,7 @@ function writeUserItemsData(userID, category, item_title, item_description) {
 export function getUserItemsData(userID, category) {
     const db = getDatabase();
     const reference = ref(db, "users/" + userID + "/" + category);
-    const items = [];
+    let items = [];
 
     onChildAdded(reference, (data) => {
 	items.push(data.val());
@@ -44,8 +44,33 @@ export function getUserItemsData(userID, category) {
     return items;
 }
 
+// Push new category to the list of categories
+function writeCategoryData(category) {
+    const db = getDatabase();
+    const reference = ref(db, "categories/");
+    const newCategoryRef = push(reference);
+    
+    set(newCategoryRef, {category: category});
+}
+
+// Returns an array of strings with the category name
+export function getCategories() {
+    const db = getDatabase();
+    const reference = ref(db, "categories/");
+    let categories = [];
+
+    onChildAdded(reference, (data) => {
+	categories.push(data.val().category);
+    });
+
+    return categories;
+}
+
 // Test data
 createUser("example-user", "url goes here");
+writeCategoryData("TV Shows");
+writeCategoryData("Movies");
+writeCategoryData("Songs");
 writeUserItemsData("example-user", "TV Shows", "tv-1", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
 writeUserItemsData("example-user", "TV Shows", "tv-2", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
 writeUserItemsData("example-user", "Movies", "movie-1", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");

@@ -12,8 +12,7 @@ import './list.css'
 
 export default function ThreeList(props) {
     
-    const listCategory = getCategory(props.index);
-    const listElements = getData(props.username, listCategory);
+    const listElements = getData(props.username, props.category);
     
     const items: JSX.Element[] = [];
     for (let i = 0; i < listElements.length; i++) {
@@ -39,7 +38,7 @@ export default function ThreeList(props) {
        <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
 	   <Grid container>
          <Grid item xs={10}>
-		   <header className="list-category">{listCategory}</header>
+		   <header className="list-category">{props.category}</header>
 		   {items}
          </Grid>
        </Grid>

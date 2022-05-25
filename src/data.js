@@ -1,4 +1,5 @@
 import * as React from "react";
+import { writeUserData } from "./firebase-config.js";
 
 var usernames = [];
 var profileData = [];

@@ -33,7 +33,7 @@ export default function ThreeList(props) {
                     This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.
                 </p>
 	    </AccordionDetails>
-	</Accordion>    
+	</Accordion>
 	);
     }
     
@@ -48,5 +48,4 @@ export default function ThreeList(props) {
      </Box>
     );  
 }
-//builtupon material UI lists demonstrationsB
-
+//builtupon material UI lists demonstrations

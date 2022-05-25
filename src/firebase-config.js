@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getDatabase, ref, set, onValue, push, onChildAdded } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyACMOd6VXktUZpNqudzKvyXPEgiiOThe7Y",
@@ -14,14 +14,41 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-// based on example
-function writeUserData(userId, name, email, imageUrl) {
+// Create a new user
+function createUser(userID, imageURL) {
     const db = getDatabase();
-    const reference = ref(db, "users/" + userId);
-    
-    set(reference, {username: name, email: email, profile_picture: imageUrl});
+    const reference = ref(db, "users/" + userID);
+
+    set(reference, {profile_picture: imageURL});
 }
 
-console.log("testing firebase-config.js");
-writeUserData("example-user", "a", "b", "c");
+// Push new item to a user's list for a given category
+function writeUserItemsData(userID, category, item_title, item_description) {
+    const db = getDatabase();
+    const reference = ref(db, "users/" + userID + "/" + category);
+    const newItemRef = push(reference);
+    
+    set(newItemRef, {title: item_title, description: item_description});
+}
 
+// Returns an array of objects (items) with title and description members
+export function getUserItemsData(userID, category) {
+    const db = getDatabase();
+    const reference = ref(db, "users/" + userID + "/" + category);
+    const items = [];
+
+    onChildAdded(reference, (data) => {
+	items.push(data.val());
+    });
+
+    return items;
+}
+
+// Test data
+createUser("example-user", "url goes here");
+writeUserItemsData("example-user", "TV Shows", "tv-1", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
+writeUserItemsData("example-user", "TV Shows", "tv-2", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
+writeUserItemsData("example-user", "Movies", "movie-1", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
+writeUserItemsData("example-user", "Movies", "movie-2", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
+writeUserItemsData("example-user", "Movies", "movie-3", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
+writeUserItemsData("example-user", "Songs", "song-1", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");

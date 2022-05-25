@@ -12,10 +12,8 @@ import './list.css'
 
 export default function ThreeList(props) {
     
-    const listElements = getData(props.username)[props.index];
     const listCategory = getCategory(props.index);
-
-    console.log(listCategory);
+    const listElements = getData(props.username, listCategory);
     
     const items: JSX.Element[] = [];
     for (let i = 0; i < listElements.length; i++) {
@@ -26,11 +24,11 @@ export default function ThreeList(props) {
                 aria-controls={"panel" + (i+1) + "a-content"}
                 id={"panel" + (i+1) + "a-header"}
             >
-		<header>{listElements[i]}</header>
+		<header>{listElements[i].title}</header>
             </AccordionSummary>
             <AccordionDetails>
-		        <p>
-                    This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.
+		<p>
+		    {listElements[i].description}
                 </p>
 	    </AccordionDetails>
 	</Accordion>

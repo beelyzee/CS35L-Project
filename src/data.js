@@ -1,16 +1,17 @@
 import * as React from "react";
-import { writeUserData } from "./firebase-config.js";
+import { getUserItemsData } from "./firebase-config.js";
 
 var usernames = [];
 var profileData = [];
 var categories = ["TV Shows", "Movies", "Songs"];
 
 // Return associated data to the username in profileData, or -1 if username is not found
-export default function getData(username) {
-    for (let i = 0; i < usernames.length; i++)
+export default function getData(username, category) {
+    return getUserItemsData(username, category);
+    /*    for (let i = 0; i < usernames.length; i++)
 	if (usernames[i] === username) return profileData[i];
 
-    return -1; // error
+    return -1; */
 }
 
 // Return category

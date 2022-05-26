@@ -38,7 +38,7 @@ export function getUserItemsData(userID, category) {
     let items = [];
 
     onChildAdded(reference, (data) => {
-	items.push(data.val());
+    items.push(data.val());
     });
 
     return items;
@@ -60,15 +60,31 @@ export function getCategories() {
     let categories = [];
 
     onChildAdded(reference, (data) => {
-	categories.push(data.val().category);
+    categories.push(data.val().category);
     });
 
     return categories;
 }
 
+export function writeUserBookmark (userID, category, item_title, item_description, add){
+
+    const db = getDatabase();
+    const reference = ref(db, "users/" + userID + "/" + "Bookmarks" + "/" + category + "/");
+    const newBookmarkRef = push(reference);
+    
+    if(!add){
+       //set(newBookmarkRef,null);//trying to have option to remove bookmarks
+       
+    }
+    else{
+        set(newBookmarkRef, {title: item_title, description: item_description});
+    }
+
+}
+
 // Test data
 createUser("example-user", "url goes here");
-writeCategoryData("TV Shows");
+writeCategoryData("TV Shows"); //to stop duplicate categories
 writeCategoryData("Movies");
 writeCategoryData("Songs");
 writeUserItemsData("example-user", "TV Shows", "tv-1", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");

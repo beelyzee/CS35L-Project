@@ -10,7 +10,7 @@ function EditableProfile(props) {
                     <h1>TV Shows</h1>
                     <TextField fullWidth placeholder='Show 1' />
                     <br></br>
-                    <TextField multiline fullWidth placeholder='Justification' />
+                    <TextField multiline fullWidth placeholder='Justification?' />
                     <br></br>
                     <br></br>
                     <TextField fullWidth placeholder='Show 2' />

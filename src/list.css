@@ -1,11 +1,16 @@
 
 .list-category {
+    display: flex;
     text-align: center;
     justify-content: center;
-    padding: 20px;
     margin: 40px;
     font-weight: 500;
     font-size: x-large;
     color: blueviolet;
  }
 
+.list-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

@@ -14,5 +14,12 @@ h1 {
     text-align: center;
 }
 
-#test {
+.display-lists {
+  margin: 10px;
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.full-page {
 }

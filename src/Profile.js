@@ -10,9 +10,9 @@ const [editText, setEditText] = useState("Edit");
 
     if (editText === "Edit") {
         return (
-            <div>
+            <div className='full-page'>
                 <Edit text={editText} setText={setEditText}/>
-                <div className='display-lists'>
+                <div className= 'display-lists'>
                     <ThreeList username={"example-user"} index={0} />
                     <ThreeList username={"example-user"} index={1} />
                     <ThreeList username={"example-user"} index={2} />
@@ -22,7 +22,9 @@ const [editText, setEditText] = useState("Edit");
     }
     else {
         return (
-            <EditableProfile text={editText} setText={setEditText} />
+            <div className='full-page'>
+                <EditableProfile text={editText} setText={setEditText} />
+            </div>
             );
         
     }

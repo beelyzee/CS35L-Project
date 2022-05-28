@@ -3,7 +3,6 @@ import { getUserItemsData } from "./firebase-config.js";
 import { getCategories as getListOfCategories } from "./firebase-config.js";
 import { updateUserItemsData } from "./firebase-config.js";
 import { writeUserItemsData } from "./firebase-config.js";
-import { deleteUserItemsData } from "./firebase-config.js";
 
 var usernames = [];
 var profileData = [];
@@ -22,7 +21,6 @@ export function updateData(username, category, index, replacement) {
 // Delete item
 export function deleteItem(username, category, index) {
     updateUserItemsData(username, category, index, {title: null, description: null});
-    //    deleteUserItemsData(username, category, index);
 }
 
 // Create new item

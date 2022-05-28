@@ -35,8 +35,8 @@ export default function ThreeList(props) {
     }
     
     return (
-       <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
-	   <Grid container>
+	<Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+	    <Grid container>
          <Grid item xs={10}>
 		   <header className="list-category">{props.category}</header>
 		   {items}

@@ -11,6 +11,7 @@ import { deleteItem } from './data.js';
 function EditableProfile(props) {
 
     const [reload, setReload] = useState(false);
+    const [editType, setEditType] = useState("none");
     const listCategories = props.categories;
     const elements: JSX.Element[] = [];
     
@@ -20,22 +21,45 @@ function EditableProfile(props) {
 	setReload(!reload);
     }
     const handleDelete = (category, index) => {
-//	console.log("Help!!");
 	deleteItem(props.username, category, index);
 	console.log("Handled deletion");
 	setReload(!reload);
     }
+    const handleEdit = (category, index, replacement, type) => {
+	let replace = {title: "", description: ""};
+	
+	if (type == "title") {
+	    replace.title = replacement;
+	    replace.description = getData(props.username, category)[index].description;
+	} else if (type == "description") {
+	    replace.title = getData(props.username, category)[index].title;
+	    replace.description = replacement;
+	}
+	
+	if (type != editType && editType != "none") {
+	    console.log("Switched box");
+	    setEditType(type);
+	    setReload(!reload);
+	}
+	console.log(replace);
 
+	updateData(props.username, category, index, replace);
+	console.log("Handled edit");
+    }
+    
     for (let i = 0; i < listCategories.length; i++) {
 	const listElements = getData(props.username, listCategories[i]);
+
+	console.log(listElements);
+	
 	const items: JSX.Element[] = [];
 
 	for (let k = 0; k < listElements.length; k++) {
 	    items.push(
 		<div key={listCategories[i] + "-editable-item-" + k + "-tag-" + listElements[k].title}>	    
-		    <TextField fullWidth defaultValue={listElements[k].title} onChange={e => updateData(props.username, listCategories[i], k, {title: e.target.value, description: listElements[k].description})} />
+		    <TextField fullWidth defaultValue={listElements[k].title} onChange={e => handleEdit(listCategories[i], k, e.target.value, "title")}/>
 		    <br></br>
-		    <TextField multiline fullWidth defaultValue={listElements[k].description} onChange={e => updateData(props.username, listCategories[i], k, {title: listElements[k].title, description: e.target.value})}/>		    
+		    <TextField multiline fullWidth defaultValue={listElements[k].description} onChange={e => handleEdit(listCategories[i], k, e.target.value, "description")}/>
 		    <Button key={listCategories[i] + "-item-" + k + "-delete-button"} onClick={() => handleDelete(listCategories[i], k)}>Delete previous item</Button>
 		    <br></br>
 		</div>

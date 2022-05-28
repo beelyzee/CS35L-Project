@@ -20,7 +20,7 @@ function Profile() {
     
     if (editText === "Edit") {
         return (
-            <div>
+		<div>
                 <Edit text={editText} setText={setEditText}/>
                 <div className='display-lists'>
 		{lists}

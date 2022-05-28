@@ -1,6 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {auth} from './firebase-config'
-
 import Routes1 from './Routes';
 
 import * as React from 'react';
@@ -29,14 +29,16 @@ export default function SignUp() {
     const register = async () => {
         const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
     }
-
+    let navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    /*
     console.log({
       email: data.get('email'),
       password: data.get('password'),
-    });
+    }); */
+    navigate('/login');
   };
 
   return (
@@ -97,7 +99,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Password (must be at least 6 characters)"
                   type="password"
                   id="password"
                   autoComplete="new-password"

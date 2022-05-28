@@ -1,9 +1,15 @@
+import { useState } from 'react';
 import './App.css';
 import {Routes, Route, useSearchParams} from 'react-router-dom';
-import ProfilePage from './ProfilePage.js';
-import RankingsPage from './RankingsPage.js';
 import Home from './Home.js';
+import { Login } from '@mui/icons-material';
+import SignUp from './signup';
+import SignIn from './login';
+import Profile from './Profile';
+import ResponsiveAppBar from './AppBar';
+import { AppBar } from '@mui/material';
 
+/*
 const Main = () => {    
     return (
 	    <div>
@@ -14,13 +20,18 @@ const Main = () => {
 	    </div>
 
     );
-}
+} */
 
+import { LoginContext } from './Context';
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
     return (
-	<div className="App">
-	    <Main />
-	</div>
+	<LoginContext.Provider value={{loggedIn, setLoggedIn}}>
+	    <Profile />
+      <SignIn />
+      <AppBar />
+      <SignUp />
+	</LoginContext.Provider>
 	/*
 	  <div className="App">
       <header className="App-header">

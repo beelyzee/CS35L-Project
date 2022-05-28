@@ -7,6 +7,8 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add';
 
 import './list.css'
 
@@ -38,11 +40,12 @@ export default function ThreeList(props) {
     }
     
     return (
-       <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+    <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
         <Grid container>
             <Grid item xs={10}>
             <header className="list-category">{listCategory}</header>
             {items}
+            <IconButton size="small" children={<AddIcon></AddIcon>}/>
             </Grid>
         </Grid>
      </Box>

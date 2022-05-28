@@ -6,6 +6,7 @@ import Home from './Home'
 import SignIn from './login'
 import SignUp from './signup'
 import Profile from './Profile'
+import RankingsPage from './RankingsPage';
 
 function Routes1() {
     return (
@@ -14,7 +15,8 @@ function Routes1() {
             <Route path='/' element={<SignIn/>} />
             <Route path='/login' element={<SignIn/>} />
             <Route path='/signup' element={<SignUp/>} />
-            <Route path='/Profile' element={<Profile/>} />
+            <Route path='/profile' element={<Profile/>} />
+            <Route path='/rankings' element={<RankingsPage/>} />
         </Routes>
     </Router>
     );

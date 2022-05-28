@@ -1,6 +1,7 @@
 import { useState } from 'react';
-
+import { useContext } from 'react';
 import * as React from 'react';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,13 +15,19 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+
+import { app } from './firebase-config'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase-config';
 
+import { useNavigate } from 'react-router-dom';
+import { LoginContext } from './Context';
 
 const theme = createTheme();
 
 export default function SignIn() {
+
+  const {loggedIn, setLoggedIn} = useContext(LoginContext);
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -28,14 +35,24 @@ export default function SignIn() {
     const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
   }
 
-  const handleSubmit = (event) => {
+  let navigate = useNavigate();
+
+const handleSubmit = (event) => {
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+ /*   console.log({
       email: data.get('email'),
       password: data.get('password'),
-    });
-  };
+      event
+    }); */
+    signInWithEmailAndPassword(auth, data.get('email'), data.get('password'))
+    .then((response) => {
+      navigate('/profile')
+      sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken)
+    })
+
+};
 
   return (
     <ThemeProvider theme={theme}>
@@ -77,10 +94,6 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               onClick={login}

@@ -3,18 +3,18 @@ import Edit from './Edit';
 import { useState } from 'react';
 import './profile.css';
 import EditableProfile from './EditableProfile';
-import { getCategories } from './firebase-config.js';
+import { getCategories } from './data.js';
 
 function Profile() {
 
-const [editText, setEditText] = useState("Edit");
-
-    const categories = getCategories();
-
+    const [editText, setEditText] = useState("Edit");
+    
+    const categories = getCategories(); 
+    
     const lists: JSX.Element[] = [];
     for (let i = 0; i < categories.length; i++) {
 	lists.push(
-		<ThreeList username={"example-user"} category={categories[i]} />
+		<ThreeList key={categories[i] + "-list"} username={"example-user"} category={categories[i]} />
 	);
     }
     
@@ -30,7 +30,7 @@ const [editText, setEditText] = useState("Edit");
     }
     else {
         return (
-            <EditableProfile text={editText} setText={setEditText} />
+		<EditableProfile username={"example-user"} categories={categories} text={editText} setText={setEditText}/>
             );
         
     }

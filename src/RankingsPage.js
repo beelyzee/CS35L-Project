@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {getCategories} from './firebase-config.js';
+import {getCategories} from './data.js';
 import {getTop10} from './data.js';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';

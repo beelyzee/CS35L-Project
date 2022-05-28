@@ -17,7 +17,7 @@ export default function ThreeList(props) {
     const items: JSX.Element[] = [];
     for (let i = 0; i < listElements.length; i++) {
 	items.push(
-	<Accordion>
+	<Accordion key={props.category + "-item-" + i}>
             <AccordionSummary
 		expandIcon={<ExpandMoreIcon />}
                 aria-controls={"panel" + (i+1) + "a-content"}

@@ -17,7 +17,7 @@ export default function ThreeList(props) {
     
     const items: JSX.Element[] = [];
     for (let i = 0; i < listElements.length; i++) {
-	createBookmark("", props.username, props.category, i);
+	createBookmark(props.username, props.username, props.category, i);
 	items.push(
 	<Accordion key={props.category + "-item-" + i}>
 	    <AccordionSummary

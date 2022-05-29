@@ -6,6 +6,7 @@ import { getCategories as getListOfCategories } from "./firebase-config.js";
 import { updateUserItemsData } from "./firebase-config.js";
 import { writeUserItemsData } from "./firebase-config.js";
 import { addBookmark } from "./firebase-config.js";
+import { getMostBookmarkedItem } from "./firebase-config.js";
 
 // Return associated data to the username in profileData, or -1 if username is not found
 export default function getData(username, category) {
@@ -30,7 +31,9 @@ export function createItem(username, category) {
 // Create new bookmark
 export function createBookmark(username, from_user, from_category, from_index) {
     const key = getUserItemsKey(from_user, from_category, from_index);
-    //addBookmark(username, key);
+    addBookmark(username, key);
+    const keys = getMostBookmarkedItem(key);
+    console.log(keys);
 }
 
 // Return an array of category names

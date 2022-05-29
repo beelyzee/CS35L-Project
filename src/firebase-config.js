@@ -38,31 +38,72 @@ export function addBookmark(userID, bookmark_key) {
     const allBookmarksReference = ref(db, "bookmarks/" + bookmark_key);
     const newBookmarkRef = push(userBookmarksReference);
 
-    set(newBookmarkRef, {key: bookmark_key});
-
-    onValue(allBookmarksReference, (snapshot) => {
-	if (snapshot.exists()) update(allBookmarksReference, {count: snapshot.val().count + 1});
-	else set(allBookmarksReference, {count: 0});
-    }, (errorObject) => {
-	console.log("Failure: " + errorObject.name);
+    let bookmarkExists = false;
+    onChildAdded(userBookmarksReference, (data) => {
+	if (data.val().key == bookmark_key)
+	    bookmarkExists = true;
     });
+
+    if (!bookmarkExists) {
+	set(newBookmarkRef, {key: bookmark_key});
+
+	let found = false;
+	onChildAdded(allBookmarksReference, (data) => {
+	    const key = data.ref.toString().split("/bookmarks/")[1].slice(0,-6);
+	    console.log(key);
+	    console.log(bookmark_key.replace(" ", "%20"));
+	    if (key == bookmark_key.replace(" ", "%20")) {
+		update(allBookmarksReference, {count: data.val() + 1});
+		found = true;
+	    }
+	});
+
+	if (!found) set(allBookmarksReference, {count: 1});
+
+    }
+}
+
+// Returns keys to most bookmarked item in each category
+export function getMostBookmarkedItem(bookmark_key) {
+    const db = getDatabase();
+    const reference = ref(db, "bookmarks/" + bookmark_key);
+    const top_items_keys = [];
+    const best_category_count = [];
+    const categories = getCategories();
+
+    for (let i = 0; i < categories.length; i++) {
+	categories[i].replace(" ", "%20");
+	best_category_count.push(0);
+	top_items_keys.push("");
+    }
+    
+    onChildAdded(reference, (data) => {
+	const category = data.ref.toString().split("/bookmarks/")[1].split("/")[2];
+	let index = 0;
+	for (let k = 0; k < categories.length; k++) {
+	    if (categories[k] == category) index = k;
+	}
+	
+	if (data.val() > best_category_count[index]) {
+	    best_category_count[index] = data.val();
+	    top_items_keys[index] = data.ref.toString().split("/bookmarks/")[1];
+	}
+    });
+
+    return top_items_keys;
 }
 
 // Returns item object that a bookmark links too
 export function getValueWithKey(key) {
     const db = getDatabase();
     const reference = ref(db, key);
-    
-    onValue(reference, (snapshot) => {
-	console.log(snapshot.val());
-	return snapshot.val();
-    }, (errorObject) => {
-	console.log("The read failed: " + errorObject.name);
-    });
-}
 
-// Finds most common bookmarks
-// TODO
+    onChildAdded(reference, (snapshot) => {
+	return snapshot.val();
+    });
+
+    return {title: "Error", description: "Bookmark not found"};
+}
 
 // Returns an array of objects (items) with title and description members
 export function getUserItemsData(userID, category) {
@@ -103,26 +144,14 @@ export function getUserItemsKey(userID, category, index) {
     const db = getDatabase();
     const reference = ref(db, "users/" + userID + "/" + category);
     let i = 0;
+    let key = "";
 
-    console.log("getUserItemsKey(" + userID + ", " + category + ", " + index + ");");
-
-    onValue(reference, async (snapshot) => {
-	await snapshot.forEach(async (childSnapshot) => {
-	    const childKey = childSnapshot.key;
-	    const childData = childSnapshot.val();
-
-	    await (() => {return "hello"});
-	    
-	    if (i == index) {
-		console.log(("users/" + userID + "/" + category + "/" + childKey));
-		return ("users/" + userID + "/" + category + "/" + childKey);
-		//await (new Promise(() => {return ("users/" + userID + "/" + category + "/" + childKey)}));
-	    }
-	    i++;
-	});
-    }, {
-	onlyOnce: true
+    onChildAdded(reference, (data) => {
+	if (i == index) key = data.key;
+	i++;
     });
+    
+    return ("users/" + userID + "/" + category + "/" + key);
 }
 
 // Push new category to the list of categories
@@ -140,6 +169,11 @@ export function getCategories() {
     const reference = ref(db, "categories/");
     const categories = [];
 
+    onChildAdded(reference, (data) => {
+	categories.push(data.val().category);
+    });
+    
+    return categories;
     return ["TV Shows", "Movies", "Songs"];
 }
 

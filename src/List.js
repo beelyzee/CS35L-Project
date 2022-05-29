@@ -1,12 +1,13 @@
 import * as React from "react";
 import getData from "./data.js";
-import {getCategory} from "./data.js";
+import { getCategory } from "./data.js";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { createBookmark } from "./data.js";
 
 import './list.css'
 
@@ -16,9 +17,10 @@ export default function ThreeList(props) {
     
     const items: JSX.Element[] = [];
     for (let i = 0; i < listElements.length; i++) {
+	createBookmark("", props.username, props.category, i);
 	items.push(
 	<Accordion key={props.category + "-item-" + i}>
-            <AccordionSummary
+	    <AccordionSummary
 		expandIcon={<ExpandMoreIcon />}
                 aria-controls={"panel" + (i+1) + "a-content"}
                 id={"panel" + (i+1) + "a-header"}

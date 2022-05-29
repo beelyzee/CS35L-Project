@@ -31,6 +31,39 @@ export function writeUserItemsData(userID, category, item_title, item_descriptio
     set(newItemRef, {title: item_title, description: item_description});
 }
 
+// Push new boomark to a user's list of bookmarks as well as the list of all bookmarks
+export function addBookmark(userID, bookmark_key) {
+    const db = getDatabase();
+    const userBookmarksReference = ref(db, "users/" + userID + "/bookmarks/");
+    const allBookmarksReference = ref(db, "bookmarks/" + bookmark_key);
+    const newBookmarkRef = push(userBookmarksReference);
+
+    set(newBookmarkRef, {key: bookmark_key});
+
+    onValue(allBookmarksReference, (snapshot) => {
+	if (snapshot.exists()) update(allBookmarksReference, {count: snapshot.val().count + 1});
+	else set(allBookmarksReference, {count: 0});
+    }, (errorObject) => {
+	console.log("Failure: " + errorObject.name);
+    });
+}
+
+// Returns item object that a bookmark links too
+export function getValueWithKey(key) {
+    const db = getDatabase();
+    const reference = ref(db, key);
+    
+    onValue(reference, (snapshot) => {
+	console.log(snapshot.val());
+	return snapshot.val();
+    }, (errorObject) => {
+	console.log("The read failed: " + errorObject.name);
+    });
+}
+
+// Finds most common bookmarks
+// TODO
+
 // Returns an array of objects (items) with title and description members
 export function getUserItemsData(userID, category) {
     const db = getDatabase();
@@ -57,6 +90,33 @@ export function updateUserItemsData(userID, category, index, replacement) {
 	    if (i == index) {
 		const childRef = ref(db, "users/" + userID + "/" + category + "/" + childKey);
 		set(childRef, replacement);
+	    }
+	    i++;
+	});
+    }, {
+	onlyOnce: true
+    });
+}
+
+// Get key/path to data entry in user items data
+export function getUserItemsKey(userID, category, index) {
+    const db = getDatabase();
+    const reference = ref(db, "users/" + userID + "/" + category);
+    let i = 0;
+
+    console.log("getUserItemsKey(" + userID + ", " + category + ", " + index + ");");
+
+    onValue(reference, async (snapshot) => {
+	await snapshot.forEach(async (childSnapshot) => {
+	    const childKey = childSnapshot.key;
+	    const childData = childSnapshot.val();
+
+	    await (() => {return "hello"});
+	    
+	    if (i == index) {
+		console.log(("users/" + userID + "/" + category + "/" + childKey));
+		return ("users/" + userID + "/" + category + "/" + childKey);
+		//await (new Promise(() => {return ("users/" + userID + "/" + category + "/" + childKey)}));
 	    }
 	    i++;
 	});

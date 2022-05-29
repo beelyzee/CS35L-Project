@@ -35,7 +35,7 @@ export function writeUserItemsData(userID, category, item_title, item_descriptio
 export function addBookmark(userID, bookmark_key) {
     const db = getDatabase();
     const userBookmarksReference = ref(db, "users/" + userID + "/bookmarks/");
-    const allBookmarksReference = ref(db, "bookmarks/" + bookmark_key);
+    const allBookmarksReference = ref(db, "bookmarks/");
     const newBookmarkRef = push(userBookmarksReference);
 
     let bookmarkExists = false;
@@ -46,18 +46,26 @@ export function addBookmark(userID, bookmark_key) {
 
     if (!bookmarkExists) {
 	set(newBookmarkRef, {key: bookmark_key});
-
+	
 	let found = false;
 	onChildAdded(allBookmarksReference, (data) => {
-	    const key = data.ref.toString().split("/bookmarks/")[1].slice(0,-6);
-	    if (key == bookmark_key.replace(" ", "%20")) {
-		update(allBookmarksReference, {count: data.val() + 1});
-		found = true;
-	    }
+	    onChildAdded(data.ref, (data2) => {
+		onChildAdded(data2.ref, (data3) => {
+		    onChildAdded(data3.ref, (data4) => {
+			const key = data4.ref.toString().split("/bookmarks/")[1];
+			if (key == bookmark_key.replace(" ", "%20") && !found) {
+			    update(allBookmarksReference, {count: data.val() + 1});
+			    found = true;
+			}
+		    });
+		});
+	    });
 	});
 
-	if (!found) set(allBookmarksReference, {count: 1});
-
+	if (!found) {
+	    const newRef = ref(db, "bookmarks/" + bookmark_key);
+	    set(newRef, {count: 1});
+	}
     }
 }
 

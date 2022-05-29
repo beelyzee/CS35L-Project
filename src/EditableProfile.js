@@ -8,10 +8,12 @@ import { useState } from 'react';
 import { createItem } from './data.js';
 import { deleteItem } from './data.js';
 import { getItemKey } from './data.js';
+import { createBookmark } from './data.js';
 
 function EditableProfile(props) {
 
     const [reload, setReload] = useState(false);
+    const [refresh, setRefresh] = useState(false);
     const [editType, setEditType] = useState("none");
     const listCategories = props.categories;
     const elements: JSX.Element[] = [];
@@ -23,9 +25,7 @@ function EditableProfile(props) {
     const handleDelete = (category, index) => {
 	deleteItem(props.username, category, index);
 	setReload(!reload);
-	console.log("Handled delete");
-    }
-    
+    }    
     const handleEdit = (category, index, replacement, type) => {
 	let replace = {title: "", description: ""};
 	
@@ -51,6 +51,7 @@ function EditableProfile(props) {
 
 	for (let k = 0; k < listElements.length; k++) {
 	    const itemKey = getItemKey(props.username, listCategories[i], k);
+	    createBookmark(props.username, props.username, listCategories[i], k);
 	    items.push(
 		<div key={listCategories[i] + "-editable-item-" + itemKey + "-tag-" + listElements[k].title}>	    
 		    <TextField fullWidth defaultValue={listElements[k].title} onChange={e => handleEdit(listCategories[i], k, e.target.value, "title")}/>

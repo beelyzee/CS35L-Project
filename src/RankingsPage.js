@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { getCategories } from './data.js';
-import { getTop10 } from './data.js';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -14,7 +13,7 @@ export default function RankingsPage() {
 
 	const items: JSX.Element[] = [];
 	
-	const listElements = getTop10();
+    const listElements = ["test", "test", "test"];
 	//const listCategory = categoryHeaders[i];
 	
 	for (let j = 0; j < listElements.length; j++) {

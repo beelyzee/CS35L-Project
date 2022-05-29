@@ -7,7 +7,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { createBookmark } from "./data.js";
+import { getItemKey } from './data.js';
 
 import './list.css'
 
@@ -17,9 +17,8 @@ export default function ThreeList(props) {
     
     const items: JSX.Element[] = [];
     for (let i = 0; i < listElements.length; i++) {
-	createBookmark(props.username, props.username, props.category, i);
 	items.push(
-	<Accordion key={props.category + "-item-" + i}>
+	    <Accordion key={getItemKey(props.username, props.category, i)}>
 	    <AccordionSummary
 		expandIcon={<ExpandMoreIcon />}
                 aria-controls={"panel" + (i+1) + "a-content"}

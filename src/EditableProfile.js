@@ -9,6 +9,7 @@ import { createItem } from './data.js';
 import { deleteItem } from './data.js';
 import { getItemKey } from './data.js';
 import { createBookmark } from './data.js';
+import { getTopRankedItems } from './data.js';
 
 function EditableProfile(props) {
 

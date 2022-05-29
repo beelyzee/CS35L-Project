@@ -115,7 +115,7 @@ export function getValueWithKey(key) {
     const db = getDatabase();
     const paths = key.split("/");
     const reference = ref(db, paths[0] + "/" + paths[1] + "/" + paths[2].replace("%20", " ") + "/");
-    let val = {title: "Error", description: "Bookmark not found"};
+    let val = {title: "Error", description: "Bookmark not found (this item was removed)"};
     
     onChildAdded(reference, (snapshot) => {
 	if (paths[3] == snapshot.key)

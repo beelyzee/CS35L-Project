@@ -1,5 +1,6 @@
 import Edit from './Edit';
 import TextField from '@mui/material/TextField';
+import './editable-profile.css'
 
 function EditableProfile(props) {
     return (

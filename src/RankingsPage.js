@@ -6,19 +6,20 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
+import './rankings-page.css'
 
-export default function RankingsPage(props) {
+export default function RankingsPage() {
 
     // input props.num is the number of categories
 
+	/*
     const categories: JSX.Element[] = [];
     for (let i = 0; i < props.num; i++) {
 
 	const items: JSX.Element[] = [];
 	
 	const listElements = getTop10(i);
-	const listCategory = getCategory(i);
-	
+
 	for (let j = 0; j < listElements.length; j++) {
 	    // push items
 	    items.push(
@@ -40,10 +41,23 @@ export default function RankingsPage(props) {
 	    </List>
 	);
     }
+	*/
+
     
     return (
-	<div>
-	    {categories}
+	<div className='full-page'>
+		<h1>Most Bookmarked</h1>
+		<div className='container'>
+			<div className='item'>
+				<p>         Breaking Bad{}</p>
+			</div>
+			<div className='item'>
+				<p>         Despacito{}</p>
+			</div>
+			<div className='item'>
+				<p>         Avengers{}</p>
+			</div>
+		</div>
 	</div>
     );
 }

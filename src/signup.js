@@ -18,16 +18,34 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import {createUserWithEmailAndPassword} from "firebase/auth";
+import {createUserWithEmailAndPassword, onAuthStateChanged, currentUser} from "firebase/auth";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 
 const theme = createTheme();
+
+function writeUserData(userId, name, email, imageUrl) {
+  const db = getDatabase();
+  const reference = ref(db, "users/" + userId);
+  
+  set(reference, {username: name, email: email, profile_picture: imageUrl});
+}
 
 export default function SignUp() {
 
     const [registerEmail, setRegisterEmail] = useState("");
-    const [registerPassword, setRegisterPassword] = useState("");  
+    const [registerPassword, setRegisterPassword] = useState("");
+    const [firstName, setfirstName] = useState("");    
+    const [lastName, setlastName] = useState("");  
     const register = async () => {
-        const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
+      try {
+        const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword)
+          .then(function(firebaseUser) {
+        writeUserData(firebaseUser.user.uid, firstName + " " + lastName, registerEmail, "tempVal")
+      });
+      }
+      catch (error) {
+        console.log(error.message)
+      }
     }
 
   const handleSubmit = (event) => {
@@ -61,6 +79,7 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                onChange={(event) => {setfirstName(event.target.value);}}
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -72,6 +91,7 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                onChange={(event) => {setlastName(event.target.value);}}
                   required
                   fullWidth
                   id="lastName"

@@ -1,0 +1,29 @@
+.titleText {
+    font-weight: bold;
+    font-size: 50 px;
+    margin-bottom: 15 px;
+}
+
+.searchBar {
+    width: 290 px;
+    height: 40 px;
+    font-size: 18px;
+}
+
+.searchBack {
+    background-color: lightgray;
+}
+
+.searchEntry {
+    padding: 10px 20px;
+    border: solid black 1px;
+    border-top: none;
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+    color: black;
+}

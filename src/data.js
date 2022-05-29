@@ -19,6 +19,21 @@ export default function getData(username, category) {
     return getUserItemsData(username, category);
 }
 
+// Return list of item objects in a user's bookmarks
+export function getBookmarks(username) {
+    const bookmarks_keys = getData(username, "bookmarks");
+    let bookmarks_data = [];
+    
+    for (let i = 0; i < bookmarks_keys.length; i++) {
+	const key = bookmarks_keys[i].key;
+	const data = getValueWithKey(key);
+
+	if (data.title != "Error") bookmarks_data.push({title: data.title, description: data.description, key: key});
+    }
+
+    return bookmarks_data;
+}
+
 // Update user data
 export function updateData(username, category, index, replacement) {
     updateUserItemsData(username, category, index, replacement);

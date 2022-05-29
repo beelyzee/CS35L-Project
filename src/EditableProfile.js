@@ -10,6 +10,7 @@ import { deleteItem } from './data.js';
 import { getItemKey } from './data.js';
 import { createBookmark } from './data.js';
 import { getTopRankedItems } from './data.js';
+import { getBookmarks } from './data.js';
 
 function EditableProfile(props) {
 
@@ -79,6 +80,13 @@ function EditableProfile(props) {
 		   
     }
 
+    let bookmarks = getBookmarks(props.username);
+
+    for (let i = 0; i < bookmarks.length; i++) {
+	console.log(bookmarks[i]);
+    }
+    
+    
     return (
             <div id='test'>
             <Edit text={props.text} setText={props.setText}/>

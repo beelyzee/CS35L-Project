@@ -7,6 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import './rankings-page.css'
+import ResponsiveAppBar from './AppBar.js';
 
 export default function RankingsPage() {
 
@@ -46,16 +47,17 @@ export default function RankingsPage() {
     
     return (
 	<div className='full-page'>
+		<ResponsiveAppBar />
 		<h1>Most Bookmarked</h1>
 		<div className='container'>
 			<div className='item'>
-				<p>         Breaking Bad{}</p>
+				<p>Top Movie{}</p>
 			</div>
 			<div className='item'>
-				<p>         Despacito{}</p>
+				<p>Top Song{}</p>
 			</div>
 			<div className='item'>
-				<p>         Avengers{}</p>
+				<p>Top TV Show{}</p>
 			</div>
 		</div>
 	</div>

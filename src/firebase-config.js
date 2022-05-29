@@ -3,14 +3,14 @@ import { getDatabase, ref, set, onValue } from "firebase/database";
 import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyACMOd6VXktUZpNqudzKvyXPEgiiOThe7Y",
-  authDomain: "prfl-8d27f.firebaseapp.com",
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
   databaseURL: "https://prfl-8d27f-default-rtdb.firebaseio.com",
-  projectId: "prfl-8d27f",
-  storageBucket: "prfl-8d27f.appspot.com",
-  messagingSenderId: "750525471821",
-  appId: "1:750525471821:web:3ed40874533fc15b3bd004",
-  measurementId: "G-7VKY4CFFPG"
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId,
+  measurementId: process.env.REACT_APP_measurementId,
 };
 
 const app = initializeApp(firebaseConfig);

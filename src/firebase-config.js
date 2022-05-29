@@ -22,6 +22,17 @@ function createUser(userID, imageURL) {
     set(reference, {profile_picture: imageURL});
 }
 
+// Returns a list of users
+export function getUsers() {
+    const db = getDatabase();
+    const reference = ref(db, "users/");
+
+    onChildAdded(reference, (data) => {
+	const key = data.ref.toString();
+	console.log(key);
+    });
+}
+
 // Push new item to a user's list for a given category
 export function writeUserItemsData(userID, category, item_title, item_description) {
     const db = getDatabase();

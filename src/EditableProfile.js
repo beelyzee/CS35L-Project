@@ -7,6 +7,7 @@ import { getState } from 'react';
 import { useState } from 'react';
 import { createItem } from './data.js';
 import { deleteItem } from './data.js';
+import { getItemKey } from './data.js';
 
 function EditableProfile(props) {
 
@@ -22,7 +23,9 @@ function EditableProfile(props) {
     const handleDelete = (category, index) => {
 	deleteItem(props.username, category, index);
 	setReload(!reload);
+	console.log("Handled delete");
     }
+    
     const handleEdit = (category, index, replacement, type) => {
 	let replace = {title: "", description: ""};
 	
@@ -47,20 +50,21 @@ function EditableProfile(props) {
 	const items: JSX.Element[] = [];
 
 	for (let k = 0; k < listElements.length; k++) {
+	    const itemKey = getItemKey(props.username, listCategories[i], k);
 	    items.push(
-		<div key={listCategories[i] + "-editable-item-" + k + "-tag-" + listElements[k].title}>	    
+		<div key={listCategories[i] + "-editable-item-" + itemKey + "-tag-" + listElements[k].title}>	    
 		    <TextField fullWidth defaultValue={listElements[k].title} onChange={e => handleEdit(listCategories[i], k, e.target.value, "title")}/>
 		    <br></br>
 		    <TextField multiline fullWidth defaultValue={listElements[k].description} onChange={e => handleEdit(listCategories[i], k, e.target.value, "description")}/>
-		    <Button key={listCategories[i] + "-item-" + k + "-delete-button"} onClick={() => handleDelete(listCategories[i], k)}>Delete previous item</Button>
+		    <Button key={listCategories[i] + "-item-" + itemKey + "-delete-button"} onClick={() => handleDelete(listCategories[i], k)}>Delete previous item</Button>
 		    <br></br>
 		</div>
 	    );
 	}
 
 	items.push(
-	    <div>
-		<Button key={listCategories[i] + "-add-item-button"} onClick={() => handleClick(listCategories[i])}>Add item in {listCategories[i]}</Button>
+	    <div key={"cat-" + i + "-" + listCategories[i] + "-add-item-button-div"}>
+		<Button key={"category-" + i + "-" + listCategories[i] + "-add-item-button"} onClick={() => handleClick(listCategories[i])}>Add item in {listCategories[i]}</Button>
 	    </div>
 	);
 	

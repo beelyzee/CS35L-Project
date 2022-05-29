@@ -21,13 +21,10 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase-config';
 
 import { useNavigate } from 'react-router-dom';
-import { LoginContext } from './Context';
 
 const theme = createTheme();
 
 export default function SignIn() {
-
-  const {loggedIn, setLoggedIn} = useContext(LoginContext);
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");

@@ -12,6 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import './list.css'
 
+
 export default function ThreeList(props) {
     
     const listElements = getData(props.username)[props.index];
@@ -65,7 +66,7 @@ export default function ThreeList(props) {
     for (let i = 0; i < listElements.length; i++) {
 	items.push(
 	<Accordion>
-            <AccordionSummary
+            <AccordionSummary className="accordion-summary"
 		        expandIcon={<ExpandMoreIcon />}
                 aria-controls={"panel" + (i+1) + "a-content"}
                 id={"panel" + (i+1) + "a-header"}

@@ -22,16 +22,15 @@ const Main = () => {
     );
 } */
 
-import { LoginContext } from './Context';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
     return (
-	<LoginContext.Provider value={{loggedIn, setLoggedIn}}>
+	<div>
 	    <Profile />
       <SignIn />
       <AppBar />
       <SignUp />
-	</LoginContext.Provider>
+	</div>
 	/*
 	  <div className="App">
       <header className="App-header">

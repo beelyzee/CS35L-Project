@@ -86,7 +86,7 @@ export function getMostBookmarkedItem(bookmark_key) {
 	
 	if (data.val() > best_category_count[index]) {
 	    best_category_count[index] = data.val();
-	    top_items_keys[index] = data.ref.toString().split("/bookmarks/")[1];
+	    top_items_keys[index] = data.ref.toString().split("/bookmarks/")[1].slice(0, -6);
 	}
     });
 
@@ -96,13 +96,16 @@ export function getMostBookmarkedItem(bookmark_key) {
 // Returns item object that a bookmark links too
 export function getValueWithKey(key) {
     const db = getDatabase();
-    const reference = ref(db, key);
-
+    const paths = key.split("/");
+    const reference = ref(db, paths[0] + "/" + paths[1] + "/" + paths[2] + "/");
+    let val = {title: "Error", description: "Bookmark not found"};
+    
     onChildAdded(reference, (snapshot) => {
-	return snapshot.val();
+	if (paths[3] == snapshot.key)
+	    val = snapshot.val();
     });
 
-    return {title: "Error", description: "Bookmark not found"};
+    return val;
 }
 
 // Returns an array of objects (items) with title and description members

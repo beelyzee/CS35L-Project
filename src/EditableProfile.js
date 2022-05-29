@@ -17,12 +17,10 @@ function EditableProfile(props) {
     
     const handleClick = (category) => {
 	createItem(props.username, category);
-	console.log("Handled addition");
 	setReload(!reload);
     }
     const handleDelete = (category, index) => {
 	deleteItem(props.username, category, index);
-	console.log("Handled deletion");
 	setReload(!reload);
     }
     const handleEdit = (category, index, replacement, type) => {
@@ -37,21 +35,15 @@ function EditableProfile(props) {
 	}
 	
 	if (type != editType && editType != "none") {
-	    console.log("Switched box");
 	    setEditType(type);
 	    setReload(!reload);
 	}
-	console.log(replace);
 
 	updateData(props.username, category, index, replace);
-	console.log("Handled edit");
     }
     
     for (let i = 0; i < listCategories.length; i++) {
 	const listElements = getData(props.username, listCategories[i]);
-
-	console.log(listElements);
-	
 	const items: JSX.Element[] = [];
 
 	for (let k = 0; k < listElements.length; k++) {

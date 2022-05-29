@@ -34,6 +34,7 @@ export function createBookmark(username, from_user, from_category, from_index) {
     addBookmark(username, key);
     const keys = getMostBookmarkedItem(key);
     console.log(keys);
+    console.log("Retrieved data: " + getValueWithKey(key).title);
 }
 
 // Return an array of category names

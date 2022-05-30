@@ -30,6 +30,13 @@ function writeUserData(userId, name, email, imageUrl) {
   set(reference, {username: name, email: email, profile_picture: imageUrl});
 }
 
+function writeNames(name, userId) {
+  const db = getDatabase();
+  const reference = ref(db, "names/" + name);
+
+  set(reference, {userId: userId});
+}
+
 export default function SignUp() {
 
     const [registerEmail, setRegisterEmail] = useState("");
@@ -41,6 +48,7 @@ export default function SignUp() {
         const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword)
           .then(function(firebaseUser) {
         writeUserData(firebaseUser.user.uid, firstName + " " + lastName, registerEmail, "tempVal")
+        writeNames(firstName + " " + lastName, firebaseUser.user.uid)
       });
       }
       catch (error) {

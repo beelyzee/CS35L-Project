@@ -18,7 +18,12 @@ import { auth } from './firebase-config';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
-const user = auth.currentUser;
+
+const ResponsiveAppBar = () => {
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const user = auth.currentUser;
 let id = null;
 if (user) {
     id = user.uid;
@@ -29,11 +34,6 @@ if (user) {
 const pages = ['My Profile', 'Search', 'Top Rankings', 'My Bookmarks'];
 const settings = ['Logout'];
 const pages_links = [`/profile:${id}`, "/search", "/rankings", "/my-bookmarks"]
-
-
-const ResponsiveAppBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

@@ -221,29 +221,22 @@ function writeCategoryData(category) {
     set(newCategoryRef, {category: category});
 }
 
-// Returns an array of strings with the category name
-export function getCategories() {
+const fetchDataFromDB = () => {
     const db = getDatabase();
-    const reference = ref(db, "categories/");
-    const categories = [];
-
-    onChildAdded(reference, (data) => {
-	categories.push(data.val().category);
+    const reference = ref(db, "categories");
+    const dataList = [];
+    return get(reference).then((doc) => {
+	const data = doc.val();
+	for (const [key, value] of Object.entries(data)) {
+	    console.log(value.category);
+	    dataList.push(value.category);
+	}
+	return dataList;
     });
-    
-    return categories;
-    return ["TV Shows", "Movies", "Songs"];
+};
+
+// Returns an array of strings with the category name
+export async function getCategories() {
+    const firebaseData = await fetchDataFromDB();
+    return firebaseData;
 }
-
-
-/*createUser("example-user", "url goes here");
-//writeCategoryData("TV Shows"); //to stop duplicate categories
-//writeCategoryData("Movies");
-//writeCategoryData("Songs");
-writeUserItemsData("example-user", "TV Shows", "tv-1", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
-    writeUserItemsData("example-user", "TV Shows", "tv-2", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
-    writeUserItemsData("example-user", "Movies", "movie-1", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
-    writeUserItemsData("example-user", "Movies", "movie-2", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
-    writeUserItemsData("example-user", "Movies", "movie-3", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
-    writeUserItemsData("example-user", "Songs", "song-1", "This is my justification. It is verbose. I have nothing to say but I am going to use as many words as I possibly ever could to say just exactly that, which is that I have nothing to say. Thank you for reading this.");
-*/

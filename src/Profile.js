@@ -1,6 +1,7 @@
 import ThreeList from './List';
 import Edit from './Edit';
 import { useState } from 'react';
+import { useEffect } from 'react';
 import './profile.css';
 import EditableProfile from './EditableProfile';
 import { AppBar, Button } from '@mui/material';
@@ -10,8 +11,25 @@ import { getCategories } from './data.js';
 function Profile() {
 
     const [editText, setEditText] = useState("Edit");
+    const [load, loadState] = useState({
+	isLoading: true,
+	categories: []
+    });
+
+    useEffect(() => {
+	const getDataWrapper = async () => {
+	    const response = await getCategories();
+	    loadState({
+		isLoading: false,
+		categories: response
+	    });
+	}
+
+	getDataWrapper();
+    });
     
-    const categories = getCategories(); 
+    const categories = load.categories; 
+
     
     const lists: JSX.Element[] = [];
     for (let i = 0; i < categories.length; i++) {

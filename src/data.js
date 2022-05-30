@@ -71,6 +71,6 @@ export function getItemKey(username, category, index) {
 
 // Return an array of category names
 export function getCategories() {
-    getListOfCategories();
+    console.log(getListOfCategories());
     return getListOfCategories();
 }

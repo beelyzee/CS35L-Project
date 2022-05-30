@@ -14,16 +14,16 @@ function App() {
     return (
 	<div>
 	    <Profile />
-      <SignIn />
-      <AppBar />
-      <SignUp />
+	    <SignIn />
+	    <ResponsiveAppBar />
+	    <SignUp />
+	</div>
+    );
 /*=======
 	<div className="App">
       <ResponsiveAppBar />
 	    <Profile />
 >>>>>>> Search-Bar*/
-	</div>
-  );
 }
 
 export default App;

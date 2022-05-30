@@ -32,7 +32,7 @@ function Profile() {
 	    });
 	}
 
-	getDataWrapper();
+	if (load.isLoading) getDataWrapper();
     });
     
     const categories = load.categories; 

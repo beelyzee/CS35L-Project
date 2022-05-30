@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import getData from "./data.js";
 import { getCategory } from "./data.js";
 import Box from "@mui/material/Box";
@@ -56,15 +57,33 @@ export default function ThreeList(props) {
   );
     */
 
+    const [load, loadState] = useState({
+        isLoading: true,
+        items: []
+    });
+
+    useEffect(() => {
+        const getDataWrapper = async () => {
+            const response = await getData(props.username, props.category);
+            loadState({
+                isLoading: false,
+                items: response
+            });
+        }
+
+        if (load.isLoading) getDataWrapper();
+    });
+    
     const handleBookmark = (username, category, index) => {
 	console.log("Bookmark created!");
 	const user = auth.currentUser.uid;
 	console.log(user);
 	createBookmark(user, username, category, index);
    }
-	  
-    const listElements = getData(props.username, props.category);
-   
+
+    
+    const listElements = load.items;
+    
     const items: JSX.Element[] = [];
     for (let i = 0; i < listElements.length; i++) {
 	items.push(

@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import getData from "./data.js";
 import { updateData } from "./data.js";
 import { getState } from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createItem } from './data.js';
 import { deleteItem } from './data.js';
 import { getItemKey } from './data.js';
@@ -16,51 +16,92 @@ import { getMatchingUsers } from './data.js';
 
 function EditableProfile(props) {
 
-    const [reload, setReload] = useState(false);
+    //const [reload, setReload] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const [editType, setEditType] = useState("none");
     const listCategories = props.categories;
+    const [load, loadState] = useState({
+        isLoading: true,
+        cats: [...Array(listCategories.length)].map(e => [])
+    });
+
+
+    useEffect(() => {
+        const getDataWrapper = async () => {
+	    for (let i = 0; i < listCategories.length; i++) {
+		const response = await getData(props.username, listCategories[i]);
+		const tempCategories = load.cats;
+		tempCategories[i] = response;
+		loadState({
+		    isLoading: false,
+                    cats: tempCategories
+		});
+	    }
+        }
+
+        if (load.isLoading) getDataWrapper();
+    });
+
+
     const elements: JSX.Element[] = [];
     
     const handleClick = (category) => {
 	createItem(props.username, category);
-	setReload(!reload);
+	//setReload(!reload);
+	loadState({
+	    isLoading: true,
+	    cats: load.cats
+	});
     }
-    const handleDelete = (category, index) => {
+    const handleDelete = (category, index, category_index) => {
 	deleteItem(props.username, category, index);
-	setReload(!reload);
+	//setReload(!reload);
+	const tempCategories = load.cats;
+	tempCategories[category_index] = [];
+	loadState({
+	    isLoading: true,
+	    cats: tempCategories
+	});
     }    
-    const handleEdit = (category, index, replacement, type) => {
+    const handleEdit = (category, index, replacement, type, category_index) => {
 	let replace = {title: "", description: ""};
+	let tempCategories = load.cats;
 	
 	if (type == "title") {
 	    replace.title = replacement;
-	    replace.description = getData(props.username, category)[index].description;
+	    replace.description = load.cats[category_index][index].description;
+	    tempCategories[category_index][index].title = replacement;
 	} else if (type == "description") {
-	    replace.title = getData(props.username, category)[index].title;
+	    replace.title = load.cats[category_index][index].title;
 	    replace.description = replacement;
-	}
-	
-	if (type != editType && editType != "none") {
-	    setEditType(type);
-	    setReload(!reload);
+	    tempCategories[category_index][index].description = replacement;
 	}
 
 	updateData(props.username, category, index, replace);
+
+	if (type != editType && editType != "none") {
+	    setEditType(type);
+	    loadState({
+		isLoading: false,
+		cats: tempCategories
+	    });
+	    //setReload(!reload);
+	}
     }
     
     for (let i = 0; i < listCategories.length; i++) {
-	const listElements = getData(props.username, listCategories[i]);
+	let listElements = []
+	if (load.cats != null)
+	    listElements = load.cats[i];/*getData(props.username, listCategories[i]);*/
 	const items: JSX.Element[] = [];
 
 	for (let k = 0; k < listElements.length; k++) {
 	    const itemKey = getItemKey(props.username, listCategories[i], k);
-	    createBookmark(props.username, props.username, listCategories[i], k);
 	    items.push(
 		<div key={listCategories[i] + "-editable-item-" + itemKey + "-tag-" + listElements[k].title}>	    
-		    <TextField fullWidth defaultValue={listElements[k].title} onChange={e => handleEdit(listCategories[i], k, e.target.value, "title")}/>
+		    <TextField fullWidth defaultValue={listElements[k].title} onChange={e => handleEdit(listCategories[i], k, e.target.value, "title", i)}/>
 		    <br></br>
-		    <TextField multiline fullWidth defaultValue={listElements[k].description} onChange={e => handleEdit(listCategories[i], k, e.target.value, "description")}/>
+		    <TextField multiline fullWidth defaultValue={listElements[k].description} onChange={e => handleEdit(listCategories[i], k, e.target.value, "description", i)}/>
 		    <Button key={listCategories[i] + "-item-" + itemKey + "-delete-button"} onClick={() => handleDelete(listCategories[i], k)}>Delete previous item</Button>
 		    <br></br>
 		</div>
@@ -81,14 +122,6 @@ function EditableProfile(props) {
 	);
 		   
     }
-
-    let bookmarks = getBookmarks(props.username);
-
-    for (let i = 0; i < bookmarks.length; i++) {
-	console.log(bookmarks[i]);
-    }
-
-    getMatchingUsers("user");
     
     return (
             <div id='test'>

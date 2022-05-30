@@ -5,6 +5,7 @@ import Profile from './Profile';
 import RankingsPage from './RankingsPage';
 import ResponsiveAppBar from './AppBar';
 import App from './App';
+import Bookmarks from './Bookmarks';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,6 +13,7 @@ root.render(
     <div>
     <ResponsiveAppBar />
 		<Profile />
+    <Bookmarks />
     </div>
   </React.StrictMode>
 );

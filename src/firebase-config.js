@@ -124,6 +124,18 @@ export function getValueWithKey(key) {
 
     return val;
 }
+export function getTitleWithKey(key) {//tailored from Cameron's getValueWithKey
+    const db = getDatabase();
+    const paths = key.split("/");
+    const reference = ref(db, paths[0] + "/" + paths[1] + "/" + paths[2].replace("%20", " ") + "/" + paths[3] + "/");
+    let val = {title: "Error", description: "Bookmark not found (this item was removed)"};
+    
+    onChildAdded(reference, (snapshot) => {
+	    val = snapshot.val();
+    });
+
+    return val;
+}
 
 // Returns an array of objects (items) with title and description members
 export function getUserItemsData(userID, category) {

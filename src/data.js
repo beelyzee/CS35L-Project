@@ -11,7 +11,10 @@ import { getUsers } from "./firebase-config.js";
 
 // Returns a list of users matching the search query
 export function getMatchingUsers(input) {
-    return getUsers();
+    let users = getUsers();
+    users = getUsers();
+    
+    return users;
 }
 
 // Returns the most bookmarked item in each category

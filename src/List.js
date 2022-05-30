@@ -11,6 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { getItemKey } from './data.js';
+import { createBookmark } from './data.js';
 import './list.css'
 
 
@@ -54,8 +55,9 @@ export default function ThreeList(props) {
   );
     */
 
-   const breateBookmark = (itemName) => {
-       console.log(itemName)
+    const handleBookmark = (username, category, index) => {
+	console.log("Bookmark created!");
+	createBookmark(username, username, category, index);
    }
 
 
@@ -75,7 +77,7 @@ export default function ThreeList(props) {
 		<div className = "item-button-pair">
 		<header>{listElements[i].title}</header>
 		<div className="icon-button">
-                    <IconButton key={listElements[i]} size="small" children={<AddCircleOutlineIcon></AddCircleOutlineIcon>} onClick={() => breateBookmark(listElements[i])}/>
+                    <IconButton key={listElements[i]} size="small" children={<AddCircleOutlineIcon></AddCircleOutlineIcon>} onClick={() => handleBookmark(props.username, props.category, i)}/>
                 </div>
 		    </div>
             </AccordionSummary>

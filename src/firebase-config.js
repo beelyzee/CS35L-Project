@@ -29,11 +29,15 @@ function writeUserData(userID, name, email, imageURL) {
 export function getUsers() {
     const db = getDatabase();
     const reference = ref(db, "users/");
-
+    const users = [];
+    
     onChildAdded(reference, (data) => {
-	const key = data.ref.toString();
+	const key = data.ref.toString().split("/users/")[1];
 	console.log(key);
+	users.push(key);
     });
+
+    return users;
 }
 
 // Push new item to a user's list for a given category

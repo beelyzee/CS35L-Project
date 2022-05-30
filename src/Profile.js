@@ -25,7 +25,7 @@ function Profile() {
             <div className='full-page'>
                 <ResponsiveAppBar />
                 <Edit text={editText} setText={setEditText}/>
-                <h1>FirstName LastName\'s Profile</h1>
+                <h1>FirstName LastName's Profile</h1>
                 <div className= 'display-lists'>
 		{lists}
                 </div>

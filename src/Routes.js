@@ -6,6 +6,7 @@ import SignUp from './signup'
 import Profile from './Profile'
 import RankingsPage from './RankingsPage';
 import Search from './search'
+import BookmarksPage from './Bookmarks';
 
 function Routes1() {
     return (
@@ -15,8 +16,9 @@ function Routes1() {
             <Route path='/login' element={<SignIn/>} />
             <Route path='/signup' element={<SignUp/>} />
             <Route path='/rankings' element={<RankingsPage/>} />
-            <Route path='/Profile' element={<App/>} />
+            <Route path='/profile:userID' element={<Profile/>} />
             <Route path='/search' element={<Search/>} />
+            <Route path='/my-bookmarks' element={<BookmarksPage/>} />
         </Routes>
     </Router>
     );

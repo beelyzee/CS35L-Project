@@ -12,11 +12,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
-const pages = ['My Profile', 'Search', 'Top Rankings', 'Check out'];
+import { auth } from './firebase-config';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+
+const pages = ['My Profile', 'Search', 'Top Rankings', 'My Bookmarks'];
 const settings = ['Logout'];
-const pages_links = ["/profile", "/search", "/data", "/"]
+const pages_links = ["/profile:", "/search", "/rankings", "/my-bookmarks"]
 
 
 const ResponsiveAppBar = () => {
@@ -34,8 +38,16 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(null);
   };
 
+  let navigate = useNavigate();
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    signOut(auth).then(() => {
+    navigate('/login');
+    // Sign-out successful.
+  }).catch((error) => {
+    console.log("error logging out")
+});
+    console.log('testing')
   };
 
   return (
@@ -97,7 +109,6 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -114,7 +125,7 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Prfl
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page, index) => (

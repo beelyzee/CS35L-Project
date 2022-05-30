@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import "./search.css";
 import { getDatabase, ref, child, get } from "firebase/database";
 import { useNavigate } from "react-router-dom";
+import ResponsiveAppBar from "./AppBar";
 
 const dbRef = ref(getDatabase());
 
@@ -24,6 +25,7 @@ function Search() {
   
 	return (
 	  <div className="main">
+		  <ResponsiveAppBar />
 		<h1>React Search</h1>
 		<div className="search">
 		  <TextField

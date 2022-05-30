@@ -7,8 +7,14 @@ import EditableProfile from './EditableProfile';
 import { AppBar, Button } from '@mui/material';
 import ResponsiveAppBar from './AppBar';
 import { getCategories } from './data.js';
+import { useParams } from 'react-router-dom';
 
 function Profile() {
+
+    let { userID } = useParams();
+    let UID = userID.substring(1);
+  //  console.log(userID); 
+  //  console.log(UID);
 
     const [editText, setEditText] = useState("Edit");
     const [load, loadState] = useState({

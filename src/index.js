@@ -6,14 +6,17 @@ import RankingsPage from './RankingsPage';
 import ResponsiveAppBar from './AppBar';
 import App from './App';
 import Bookmarks from './Bookmarks';
+import SignIn from './login';
+import SignUp from './signup';
+import { AppBar } from '@mui/material';
+import { Login } from '@mui/icons-material';
+import Routes1 from './Routes';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
     <div>
-    <ResponsiveAppBar />
-		<Profile />
-    <Bookmarks />
+      <Routes1 />
     </div>
   </React.StrictMode>
 );

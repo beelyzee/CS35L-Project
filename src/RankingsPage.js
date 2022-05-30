@@ -5,17 +5,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
+import './rankings-page.css'
+import ResponsiveAppBar from './AppBar.js';
 
 export default function RankingsPage() {
-	  
-    //const categories: JSX.Element[] = [];
-    //for (let i = 0; i < categoryHeaders.length; i++) {
-
-	const items: JSX.Element[] = [];
-	
-    const listElements = ["test", "test", "test"];
-	//const listCategory = categoryHeaders[i];
-	
+/*
 	for (let j = 0; j < listElements.length; j++) {
 	    // push items
 	    items.push(
@@ -36,12 +30,27 @@ export default function RankingsPage() {
 		<header>{listCategory}</header>
 		{items}
 	    </List>
-	    );*/
-    //}
+<<<<<<< HEAD
+	);
+    }
+	*/
+
     
     return (
-	<div>
-	    {items}
-	</div>
+	<div className='full-page'>
+		<ResponsiveAppBar />
+		<h1>Most Bookmarked</h1>
+		<div className='container'>
+			<div className='item'>
+				<p>Top Movie{}</p>
+			</div>
+			<div className='item'>
+				<p>Top Song{}</p>
+			</div>
+			<div className='item'>
+				<p>Top TV Show{}</p>
+			</div>
+		</div>
+	    </div>
     );
 }

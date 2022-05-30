@@ -7,6 +7,15 @@ import { updateUserItemsData } from "./firebase-config.js";
 import { writeUserItemsData } from "./firebase-config.js";
 import { addBookmark } from "./firebase-config.js";
 import { getMostBookmarkedItem } from "./firebase-config.js";
+import { getUsers } from "./firebase-config.js";
+
+// Returns a list of users matching the search query
+export function getMatchingUsers(input) {
+    let users = getUsers();
+    users = getUsers();
+    
+    return users;
+}
 
 // Returns the most bookmarked item in each category
 export function getTopRankedItems() {

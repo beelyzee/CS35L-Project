@@ -1,5 +1,6 @@
 import Edit from './Edit';
 import TextField from '@mui/material/TextField';
+import './editable-profile.css'
 import Button from '@mui/material/Button';
 import getData from "./data.js";
 import { updateData } from "./data.js";
@@ -11,6 +12,7 @@ import { getItemKey } from './data.js';
 import { createBookmark } from './data.js';
 import { getTopRankedItems } from './data.js';
 import { getBookmarks } from './data.js';
+import { getMatchingUsers } from './data.js';
 
 function EditableProfile(props) {
 
@@ -85,7 +87,8 @@ function EditableProfile(props) {
     for (let i = 0; i < bookmarks.length; i++) {
 	console.log(bookmarks[i]);
     }
-    
+
+    getMatchingUsers("user");
     
     return (
             <div id='test'>

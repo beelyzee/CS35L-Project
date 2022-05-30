@@ -1,25 +1,43 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from 'firebase/auth'
 import { getDatabase, once, on, ref, child, get, set, onValue, push, update, onChildAdded, onChildChanged, onDataChange } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyACMOd6VXktUZpNqudzKvyXPEgiiOThe7Y",
-  authDomain: "prfl-8d27f.firebaseapp.com",
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
   databaseURL: "https://prfl-8d27f-default-rtdb.firebaseio.com",
-  projectId: "prfl-8d27f",
-  storageBucket: "prfl-8d27f.appspot.com",
-  messagingSenderId: "750525471821",
-  appId: "1:750525471821:web:3ed40874533fc15b3bd004",
-  measurementId: "G-7VKY4CFFPG"
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId,
+  measurementId: process.env.REACT_APP_measurementId,
 };
 
 const app = initializeApp(firebaseConfig);
 
-// Create a new user
-function createUser(userID, imageURL) {
+export const auth = getAuth(app);
+
+// based on example
+function writeUserData(userID, name, email, imageURL) {
     const db = getDatabase();
     const reference = ref(db, "users/" + userID);
 
     set(reference, {profile_picture: imageURL});
+}
+
+// Returns a list of users
+export function getUsers() {
+    const db = getDatabase();
+    const reference = ref(db, "users/");
+    const users = [];
+    
+    onChildAdded(reference, (data) => {
+	const key = data.ref.toString().split("/users/")[1];
+	console.log(key);
+	users.push(key);
+    });
+
+    return users;
 }
 
 // Push new item to a user's list for a given category

@@ -3,6 +3,8 @@ import Edit from './Edit';
 import { useState } from 'react';
 import './profile.css';
 import EditableProfile from './EditableProfile';
+import { AppBar, Button } from '@mui/material';
+import ResponsiveAppBar from './AppBar';
 import { getCategories } from './data.js';
 
 function Profile() {
@@ -20,9 +22,11 @@ function Profile() {
     
     if (editText === "Edit") {
         return (
-		<div>
+            <div className='full-page'>
+                <ResponsiveAppBar />
                 <Edit text={editText} setText={setEditText}/>
-                <div className='display-lists'>
+                <h1>FirstName LastName's Profile</h1>
+                <div className= 'display-lists'>
 		{lists}
                 </div>
             </div>
@@ -30,7 +34,10 @@ function Profile() {
     }
     else {
         return (
-		<EditableProfile username={"example-user"} categories={categories} text={editText} setText={setEditText}/>
+            <div className='full-page'>
+                <ResponsiveAppBar />
+                <EditableProfile username={"example-user"} categories={categories} text={editText} setText={setEditText} />
+            </div>
             );
         
     }

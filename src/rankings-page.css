@@ -1,0 +1,33 @@
+h1 {
+    padding: 30px;
+    position: block;
+    font-family: futura;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    font-size: xx-large;
+    align-items: center;
+    border: solid black 5px;
+    justify-content: center;
+    width: 50%;
+    position: absolute;
+    top: 34%;
+    left: 36%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 500px;
+    height: 500px;
+    background-color: lavender;
+    border-radius: 10%;
+}
+
+.item {
+    color: blueviolet;
+    font-family: futura;
+}
+
+.full-page {
+    background-color: white;
+}

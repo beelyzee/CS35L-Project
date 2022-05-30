@@ -41,7 +41,6 @@ export function getUsers() {
     
     onChildAdded(reference, (data) => {
 	const key = data.ref.toString().split("/users/")[1];
-	console.log(key);
 	users.push(key);
     });
 
@@ -132,7 +131,6 @@ export function getMostBookmarkedItem() {
 	});
     });
 
-    console.log(top_items_keys);
     return top_items_keys;
 }
 
@@ -161,19 +159,6 @@ export function getTitleWithKey(key) {//tailored from Cameron's getValueWithKey
     });
 
     return val;
-}
-
-// Returns an array of objects (items) with title and description members
-export function getUserItemsData(userID, category) {
-    const db = getDatabase();
-    const reference = ref(db, "users/" + userID + "/" + category);
-    let items = [];
-
-    onChildAdded(reference, (data) => {
-	items.push(data.val());
-    });
-
-    return items;
 }
 
 export function updateUserItemsData(userID, category, index, replacement) {
@@ -221,15 +206,19 @@ function writeCategoryData(category) {
     set(newCategoryRef, {category: category});
 }
 
-const fetchDataFromDB = () => {
+const fetchDataFromDB = (path) => {
     const db = getDatabase();
-    const reference = ref(db, "categories");
+    const reference = ref(db, path);
     const dataList = [];
     return get(reference).then((doc) => {
 	const data = doc.val();
+	
+	if (data == null) {
+	    return [];
+	}
+	
 	for (const [key, value] of Object.entries(data)) {
-	    console.log(value.category);
-	    dataList.push(value.category);
+	    dataList.push(value);
 	}
 	return dataList;
     });
@@ -237,6 +226,24 @@ const fetchDataFromDB = () => {
 
 // Returns an array of strings with the category name
 export async function getCategories() {
-    const firebaseData = await fetchDataFromDB();
-    return firebaseData;
+    const firebaseData = await fetchDataFromDB("categories");
+    const categories = []
+    
+    for (let i = 0; i < firebaseData.length; i++) {
+	categories.push(firebaseData[i].category);
+    }
+    
+    return categories;
+}
+
+// Returns an array of objects (items) with title and description members
+export async function getUserItemsData(userID, category) {
+    const firebaseData = await fetchDataFromDB("users/" + userID + "/" + category);
+    const items = [];
+
+    for (let i = 0; i < firebaseData.length; i++) {
+	items.push(firebaseData[i]);
+    }
+
+    return items;
 }

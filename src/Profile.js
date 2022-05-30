@@ -31,7 +31,7 @@ function Profile() {
 	    });
 	}
 
-	getDataWrapper();
+	if (load.isLoading) getDataWrapper();
     });
     
     const categories = load.categories; 
@@ -40,7 +40,7 @@ function Profile() {
     const lists: JSX.Element[] = [];
     for (let i = 0; i < categories.length; i++) {
 	lists.push(
-		<ThreeList key={categories[i] + "-list"} username={"example-user"} category={categories[i]} />
+		<ThreeList key={categories[i] + "-list"} username={UID} category={categories[i]} />
 	);
     }
     
@@ -60,7 +60,7 @@ function Profile() {
         return (
             <div className='full-page'>
                 <ResponsiveAppBar />
-                <EditableProfile username={"example-user"} categories={categories} text={editText} setText={setEditText} />
+                <EditableProfile username={UID} categories={categories} text={editText} setText={setEditText} />
             </div>
             );
         

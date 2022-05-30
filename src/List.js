@@ -1,6 +1,6 @@
 import * as React from "react";
 import getData from "./data.js";
-import {getCategory} from "./data.js";
+import { getCategory } from "./data.js";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Accordion from '@mui/material/Accordion';
@@ -10,15 +10,12 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { getItemKey } from './data.js';
 import './list.css'
 
 
 export default function ThreeList(props) {
-    
-    const listElements = getData(props.username)[props.index];
-    const listCategory = getCategory(props.index);
 
-    console.log(listCategory);
 
     /*
         function toggleBookmark(e){
@@ -61,26 +58,30 @@ export default function ThreeList(props) {
        console.log(itemName)
    }
 
-    
+
+	  
+	  
+    const listElements = getData(props.username, props.category);
+   
     const items: JSX.Element[] = [];
     for (let i = 0; i < listElements.length; i++) {
 	items.push(
-	<Accordion>
-            <AccordionSummary className="accordion-summary"
-		        expandIcon={<ExpandMoreIcon />}
+	    <Accordion key={getItemKey(props.username, props.category, i)}>
+	    <AccordionSummary
+		expandIcon={<ExpandMoreIcon />}
                 aria-controls={"panel" + (i+1) + "a-content"}
                 id={"panel" + (i+1) + "a-header"}
             >
-            <div className="item-button-pair">
-                <header>{listElements[i]}</header>
-                <div className="icon-button">
+		<div className = "item-button-pair">
+		<header>{listElements[i].title}</header>
+		<div className="icon-button">
                     <IconButton key={listElements[i]} size="small" children={<AddCircleOutlineIcon></AddCircleOutlineIcon>} onClick={() => breateBookmark(listElements[i])}/>
                 </div>
-            </div>
+		    </div>
             </AccordionSummary>
             <AccordionDetails>
-		        <p>
-                    I love this song/movie/TV show. It's the best, for so many reasons that I can't list just one.
+		<p>
+		    {listElements[i].description}
                 </p>
 	    </AccordionDetails>
 	</Accordion>
@@ -88,14 +89,15 @@ export default function ThreeList(props) {
     }
     
     return (
-    <Box sx={{ width: "100%" }}>
-        <Grid container>
-            <Grid item xs={10}>
-            <header className="list-category">{listCategory}</header>
-            {items}
-            </Grid>
-        </Grid>
+	<Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+	    <Grid container>
+         <Grid item xs={10}>
+		   <header className="list-category">{props.category}</header>
+		   {items}
+         </Grid>
+       </Grid>
      </Box>
     );  
 }
 //builtupon material UI lists demonstrations
+B

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import './edit.css'
 
@@ -11,7 +11,7 @@ function Edit(props) {
     }
     return (
         <div id="edit-button">
-        <Button onClick={handleClick}> 
+            <Button key="edit-button" onClick={handleClick}> 
             { props.text }
         </Button>        
         </div>

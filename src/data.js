@@ -1,32 +1,73 @@
 import * as React from "react";
-import { writeUserData } from "./firebase-config.js";
+import { getUserItemsData } from "./firebase-config.js";
+import { getUserItemsKey } from "./firebase-config.js";
+import { getValueWithKey } from "./firebase-config.js";
+import { getCategories as getListOfCategories } from "./firebase-config.js";
+import { updateUserItemsData } from "./firebase-config.js";
+import { writeUserItemsData } from "./firebase-config.js";
+import { addBookmark } from "./firebase-config.js";
+import { getMostBookmarkedItem } from "./firebase-config.js";
+import { getUsers } from "./firebase-config.js";
 
-var usernames = [];
-var profileData = [];
-var categories = ["TV Shows", "Movies", "Songs"];
+// Returns a list of users matching the search query
+export function getMatchingUsers(input) {
+    return getUsers();
+}
+
+// Returns the most bookmarked item in each category
+export function getTopRankedItems() {
+    getMostBookmarkedItem();
+    return getMostBookmarkedItem();
+}
 
 // Return associated data to the username in profileData, or -1 if username is not found
-export default function getData(username) {
-    for (let i = 0; i < usernames.length; i++)
-	if (usernames[i] === username) return profileData[i];
-
-    return -1; // error
+export default function getData(username, category) {
+    return getUserItemsData(username, category);
 }
 
-// Return category
-export function getCategory(index) {
-    return categories[index];
+// Return list of item objects in a user's bookmarks
+export function getBookmarks(username) {
+    const bookmarks_keys = getData(username, "bookmarks");
+    let bookmarks_data = [];
+    
+    for (let i = 0; i < bookmarks_keys.length; i++) {
+	const key = bookmarks_keys[i].key;
+	const data = getValueWithKey(key);
+
+	if (data.title != "Error") bookmarks_data.push({title: data.title, description: data.description, key: key});
+    }
+
+    return bookmarks_data;
 }
 
-// Return top ten (or less) ranked items in the category indicated by index
-export function getTop10(index) {
-    return profileData[0][index];
+// Update user data
+export function updateData(username, category, index, replacement) {
+    updateUserItemsData(username, category, index, replacement);
 }
 
-// Items is 2D array where each row are the recommendations for the corresponding category
-export function setData(username, items) {
-    usernames.push(username);
-    profileData.push(items);
+// Delete item
+export function deleteItem(username, category, index) {
+    updateUserItemsData(username, category, index, {title: null, description: null});
 }
 
-setData("example-user", [ ["tv-1", "tv-2"], ["movie-1", "movie-2", "movie-3"], ["song-1"] ]);
+// Create new item
+export function createItem(username, category) {
+    writeUserItemsData(username, category, "", "");
+}
+
+// Create new bookmark
+export function createBookmark(username, from_user, from_category, from_index) {
+    const key = getUserItemsKey(from_user, from_category, from_index);
+    addBookmark(username, key);
+}
+
+// Returns key of item
+export function getItemKey(username, category, index) {
+    return getUserItemsKey(username, category, index);
+}
+
+// Return an array of category names
+export function getCategories() {
+    getListOfCategories();
+    return getListOfCategories();
+}

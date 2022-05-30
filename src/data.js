@@ -12,14 +12,11 @@ import { getUsers } from "./firebase-config.js";
 // Returns a list of users matching the search query
 export function getMatchingUsers(input) {
     let users = getUsers();
-    users = getUsers();
-    
     return users;
 }
 
 // Returns the most bookmarked item in each category
 export function getTopRankedItems() {
-    getMostBookmarkedItem();
     return getMostBookmarkedItem();
 }
 
@@ -71,6 +68,5 @@ export function getItemKey(username, category, index) {
 
 // Return an array of category names
 export function getCategories() {
-    console.log(getListOfCategories());
     return getListOfCategories();
 }

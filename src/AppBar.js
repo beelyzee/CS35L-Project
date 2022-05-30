@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 
 const pages = ['My Profile', 'Search', 'Top Rankings', 'Check out'];
 const settings = ['Logout'];
-const pages_links = ["/profile", "/search", "/", "/"]
+const pages_links = ["/profile", "/search", "/data", "/"]
 
 
 const ResponsiveAppBar = () => {

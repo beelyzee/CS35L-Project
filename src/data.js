@@ -8,6 +8,7 @@ import { writeUserItemsData } from "./firebase-config.js";
 import { addBookmark } from "./firebase-config.js";
 import { getMostBookmarkedItem } from "./firebase-config.js";
 import { getUsers } from "./firebase-config.js";
+import { getUsername as getUsernameFromUserID} from "./firebase-config.js";
 
 // Returns a list of users matching the search query
 export function getMatchingUsers(input) {
@@ -15,9 +16,22 @@ export function getMatchingUsers(input) {
     return users;
 }
 
+// Returns a username when given user ID
+export function getUsername(userID) {
+    return getUsernameFromUserID(userID);
+}
+
 // Returns the most bookmarked item in each category
-export function getTopRankedItems() {
-    return getMostBookmarkedItem();
+export function getTopRankedItems(categories) {
+    const item_keys = getMostBookmarkedItem(categories);
+    let items = new Array(categories.length);
+
+    for (let i = 0; i < item_keys.length; i++) {
+	items[i] = (getValueWithKey(item_keys[i]));
+    }
+
+    console.log(items);
+    return items;
 }
 
 // Return associated data to the username in profileData, or -1 if username is not found

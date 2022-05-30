@@ -9,6 +9,7 @@ import ResponsiveAppBar from './AppBar';
 import { getCategories } from './data.js';
 import { useParams } from 'react-router-dom';
 import { auth } from './firebase-config';
+import { getUsername } from './data.js';
 
 function Profile() {
 

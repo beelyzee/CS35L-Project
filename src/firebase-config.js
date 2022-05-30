@@ -33,6 +33,25 @@ function writeUserData(userID, name, email, imageURL) {
     set(reference, {profile_picture: imageURL});
 }
 
+// Fetch data from Firebase
+const fetchDataFromDB = (path) => {
+    const db = getDatabase();
+    const reference = ref(db, path);
+    const dataList = [];
+    return get(reference).then((doc) => {
+	const data = doc.val();
+	
+	if (data == null) {
+	    return [];
+	}
+	
+	for (const [key, value] of Object.entries(data)) {
+	    dataList.push(value);
+	}
+	return dataList;
+    });
+};
+
 // Returns a list of users
 export function getUsers() {
     const db = getDatabase();
@@ -95,12 +114,11 @@ export function addBookmark(userID, bookmark_key) {
 }
 
 // Returns keys to most bookmarked item in each category
-export function getMostBookmarkedItem() {
+export function getMostBookmarkedItem(categories) {
     const db = getDatabase();
     const reference = ref(db, "bookmarks/");
     const top_items_keys = [];
     const best_category_count = [];
-    const categories = getCategories();
 
     for (let i = 0; i < categories.length; i++) {
 	categories[i].replace(" ", "%20");
@@ -138,8 +156,11 @@ export function getMostBookmarkedItem() {
 export function getValueWithKey(key) {
     const db = getDatabase();
     const paths = key.split("/");
-    const reference = ref(db, paths[0] + "/" + paths[1] + "/" + paths[2].replace("%20", " ") + "/");
     let val = {title: "Error", description: "Bookmark not found (this item was removed)"};
+
+    if (paths.length != 4) return val;    
+    const reference = ref(db, paths[0] + "/" + paths[1] + "/" + paths[2].replace("%20", " ") + "/");
+
     
     onChildAdded(reference, (snapshot) => {
 	if (paths[3] == snapshot.key)
@@ -148,6 +169,21 @@ export function getValueWithKey(key) {
 
     return val;
 }
+
+// Get username from userID
+export function getUsername(userID) {
+    const db = getDatabase();
+    const reference = ref(db, "users/" + userID);
+    let val = "";
+    
+    onChildAdded(reference, (snapshot) => {
+	if (snapshot.key == "username")
+	    val = snapshot.val();
+    });
+
+    return val;
+}
+
 export function getTitleWithKey(key) {//tailored from Cameron's getValueWithKey
     const db = getDatabase();
     const paths = key.split("/");
@@ -205,24 +241,6 @@ function writeCategoryData(category) {
     
     set(newCategoryRef, {category: category});
 }
-
-const fetchDataFromDB = (path) => {
-    const db = getDatabase();
-    const reference = ref(db, path);
-    const dataList = [];
-    return get(reference).then((doc) => {
-	const data = doc.val();
-	
-	if (data == null) {
-	    return [];
-	}
-	
-	for (const [key, value] of Object.entries(data)) {
-	    dataList.push(value);
-	}
-	return dataList;
-    });
-};
 
 // Returns an array of strings with the category name
 export async function getCategories() {

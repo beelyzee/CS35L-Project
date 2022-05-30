@@ -9,6 +9,7 @@ import { addBookmark } from "./firebase-config.js";
 import { getMostBookmarkedItem } from "./firebase-config.js";
 import { getUsers } from "./firebase-config.js";
 import { getUsername as getUsernameFromUserID} from "./firebase-config.js";
+import { useState, useEffect } from 'react';
 
 // Returns a list of users matching the search query
 export function getMatchingUsers(input) {
@@ -34,15 +35,36 @@ export function getTopRankedItems(categories) {
     return items;
 }
 
-// Return associated data to the username in profileData, or -1 if username is not found
+// Return associated data to the username in category
 export default function getData(username, category) {
     return getUserItemsData(username, category);
 }
 
 // Return list of item objects in a user's bookmarks
-export function getBookmarks(username) {
-    const bookmarks_keys = getData(username, "bookmarks");
+export function GetBookmarks(username) {
+
+    const [load, loadState] = useState({
+        isLoading: true,
+        items: []
+    });
+
+    useEffect(() => {
+        const getDataWrapper = async () => {
+            const response = await getData(username, "bookmarks");
+            loadState({
+                isLoading: false,
+                items: response
+            });
+        }
+
+        if (load.isLoading) getDataWrapper();
+    });
+    
+    const bookmarks_keys = load.items;
     let bookmarks_data = [];
+
+    console.log("getting bookmarks");
+    console.log("number=", bookmarks_keys.length);
     
     for (let i = 0; i < bookmarks_keys.length; i++) {
 	const key = bookmarks_keys[i].key;

@@ -19,8 +19,9 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { app } from './firebase-config'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase-config';
+
 
 import { useNavigate } from 'react-router-dom';
 
@@ -36,6 +37,17 @@ export default function SignIn() {
 
   let navigate = useNavigate();
 
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      console.log(uid)
+      navigate(`/profile:${uid}`)
+    } else {
+      // User is signed out
+      console.log("user is signed out")
+    }
+  });
+
   const handleSubmit = (event) => {
 
     event.preventDefault();
@@ -47,7 +59,7 @@ export default function SignIn() {
     }); */
     signInWithEmailAndPassword(auth, data.get('email'), data.get('password'))
     .then((response) => {
-      navigate('/profile')
+    /*  navigate('/profile:') */
       sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken)
     })
 

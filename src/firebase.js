@@ -1,3 +1,3 @@
 
 import 'firebase/auth'
-export const auth = app.auth()
+//export const auth = app.auth()

@@ -7,8 +7,11 @@ import Profile from './Profile'
 import RankingsPage from './RankingsPage';
 import Search from './search'
 import BookmarksPage from './Bookmarks';
+import { auth } from './firebase-config';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 
 function Routes1() {
+
     return (
     <Router>
         <Routes>

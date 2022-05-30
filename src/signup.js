@@ -55,7 +55,8 @@ export default function SignUp() {
         console.log(error.message)
       }
     }
-    let navigate = useNavigate();
+  
+  //  let navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -63,9 +64,22 @@ export default function SignUp() {
     console.log({
       email: data.get('email'),
       password: data.get('password'),
-    }); */
-    navigate('/login');
+    }); 
+    navigate('/login'); */
   };
+
+  let navigate = useNavigate();
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      console.log(uid)
+      navigate(`/profile:${uid}`)
+    } else {
+      // User is signed out
+      console.log("user is signed out")
+    }
+  });
 
   return (
     <ThemeProvider theme={theme}>

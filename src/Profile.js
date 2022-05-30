@@ -8,6 +8,7 @@ import { AppBar, Button } from '@mui/material';
 import ResponsiveAppBar from './AppBar';
 import { getCategories } from './data.js';
 import { useParams } from 'react-router-dom';
+import { auth } from './firebase-config';
 
 function Profile() {
 
@@ -36,15 +37,22 @@ function Profile() {
     
     const categories = load.categories; 
 
+    let id = null;
+    const user = auth.currentUser;
+    if (user) {
+        id = user.uid;
+      } else {
+        console.log("no user signed in")
+      }
     
     const lists: JSX.Element[] = [];
     for (let i = 0; i < categories.length; i++) {
 	lists.push(
-		<ThreeList key={categories[i] + "-list"} username={"example-user"} category={categories[i]} />
+		<ThreeList key={categories[i] + "-list"} username={UID} category={categories[i]} />
 	);
     }
     
-    if (editText === "Edit") {
+    if (editText == "Edit" && id != null && id == UID) {
         return (
             <div className='full-page'>
                 <ResponsiveAppBar />
@@ -56,11 +64,25 @@ function Profile() {
             </div>
             );
     }
+
+    else if (id == null || id != UID) {
+        console.log({id})
+        return (
+            <div className='full-page'>
+                <ResponsiveAppBar />
+                <h1>FirstName LastName's Profile</h1>
+                <div className= 'display-lists'>
+		            {lists}
+                </div>
+            </div>
+        )
+    }
+
     else {
         return (
             <div className='full-page'>
                 <ResponsiveAppBar />
-                <EditableProfile username={"example-user"} categories={categories} text={editText} setText={setEditText} />
+                <EditableProfile username={UID} categories={categories} text={editText} setText={setEditText} />
             </div>
             );
         

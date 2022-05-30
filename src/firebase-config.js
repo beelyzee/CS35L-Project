@@ -18,7 +18,7 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
 // based on example
-function writeUserData(userId, name, email, imageUrl) {
+function writeUserData(userID, name, email, imageURL) {
     const db = getDatabase();
     const reference = ref(db, "users/" + userID);
 

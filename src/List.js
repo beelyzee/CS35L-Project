@@ -13,6 +13,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { getItemKey } from './data.js';
 import { createBookmark } from './data.js';
 import './list.css'
+import { auth } from "./firebase-config.js";
 
 
 export default function ThreeList(props) {
@@ -57,11 +58,10 @@ export default function ThreeList(props) {
 
     const handleBookmark = (username, category, index) => {
 	console.log("Bookmark created!");
-	createBookmark(username, username, category, index);
+	const user = auth.currentUser.uid;
+	console.log(user);
+	createBookmark(user, username, category, index);
    }
-
-
-	  
 	  
     const listElements = getData(props.username, props.category);
    

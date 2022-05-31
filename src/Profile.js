@@ -9,7 +9,7 @@ import ResponsiveAppBar from './AppBar';
 import { getCategories } from './data.js';
 import { useParams } from 'react-router-dom';
 import { auth } from './firebase-config';
-import { getUsername } from './firebase-config';
+import { getUsername } from './data.js';
 
 function Profile() {
 
@@ -55,7 +55,7 @@ function Profile() {
 		<ThreeList key={categories[i] + "-list"} username={UID} category={categories[i]} />
 	);
     }
-    
+
     if (editText == "Edit" && id != null && id == UID) {
         return (
             <div className='full-page'>

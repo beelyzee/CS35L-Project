@@ -8,27 +8,82 @@ import { writeUserItemsData } from "./firebase-config.js";
 import { addBookmark } from "./firebase-config.js";
 import { getMostBookmarkedItem } from "./firebase-config.js";
 import { getUsers } from "./firebase-config.js";
+import { getUsername as getUsernameFromUserID} from "./firebase-config.js";
+import { useState, useEffect } from 'react';
 
 // Returns a list of users matching the search query
-export function getMatchingUsers(input) {
-    let users = getUsers();
-    return users;
+export function GetRandomUser() {
+    const [load, loadState] = useState({
+        isLoading: true,
+        users: []
+    });
+
+    useEffect(() => {
+        const getDataWrapper = async () => {
+            const response = await getUsers();
+            loadState({
+                isLoading: false,
+                users: response
+            });
+        }
+
+        if (load.isLoading) getDataWrapper();
+    });
+
+    const users = load.users;
+    const index = Math.floor(Math.random() * users.length);
+    
+    return users[index];
+}
+
+// Returns a username when given user ID
+export function getUsername(userID) {
+    return getUsernameFromUserID(userID);
 }
 
 // Returns the most bookmarked item in each category
-export function getTopRankedItems() {
-    return getMostBookmarkedItem();
+export function getTopRankedItems(categories) {
+    const item_keys = getMostBookmarkedItem(categories);
+    let items = new Array(categories.length);
+
+    for (let i = 0; i < item_keys.length; i++) {
+	items[i] = (getValueWithKey(item_keys[i]));
+    }
+
+    console.log(items);
+    return items;
 }
 
-// Return associated data to the username in profileData, or -1 if username is not found
+// Return associated data to the username in category
 export default function getData(username, category) {
     return getUserItemsData(username, category);
 }
 
 // Return list of item objects in a user's bookmarks
-export function getBookmarks(username) {
-    const bookmarks_keys = getData(username, "bookmarks");
+export function GetBookmarks(username) {
+
+    const [load, loadState] = useState({
+        isLoading: true,
+        items: []
+    });
+
+    useEffect(() => {
+        const getDataWrapper = async () => {
+            const response = await getData(username, "bookmarks");
+            loadState({
+                isLoading: false,
+                items: response
+            });
+        }
+
+        if (load.isLoading) getDataWrapper();
+    });
+    
+    const bookmarks_keys = load.items;
     let bookmarks_data = [];
+
+    console.log("getting bookmarks");
+    console.log("number=", bookmarks_keys.length);
     
     for (let i = 0; i < bookmarks_keys.length; i++) {
 	const key = bookmarks_keys[i].key;

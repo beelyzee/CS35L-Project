@@ -12,9 +12,28 @@ import { getUsername as getUsernameFromUserID} from "./firebase-config.js";
 import { useState, useEffect } from 'react';
 
 // Returns a list of users matching the search query
-export function getMatchingUsers(input) {
-    let users = getUsers();
-    return users;
+export function GetRandomUser() {
+    const [load, loadState] = useState({
+        isLoading: true,
+        users: []
+    });
+
+    useEffect(() => {
+        const getDataWrapper = async () => {
+            const response = await getUsers();
+            loadState({
+                isLoading: false,
+                users: response
+            });
+        }
+
+        if (load.isLoading) getDataWrapper();
+    });
+
+    const users = load.users;
+    const index = Math.floor(Math.random() * users.length);
+    
+    return users[index];
 }
 
 // Returns a username when given user ID

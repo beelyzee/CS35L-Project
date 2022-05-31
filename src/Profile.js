@@ -52,7 +52,7 @@ function Profile() {
 		<ThreeList key={categories[i] + "-list"} username={UID} category={categories[i]} />
 	);
     }
-    
+
     if (editText == "Edit" && id != null && id == UID) {
         return (
             <div className='full-page'>

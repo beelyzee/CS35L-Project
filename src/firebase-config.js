@@ -53,17 +53,15 @@ const fetchDataFromDB = (path) => {
 };
 
 // Returns a list of users
-export function getUsers() {
-    const db = getDatabase();
-    const reference = ref(db, "users/");
+export async function getUsers() {
+    const firebaseData = await fetchDataFromDB("users/");
     const users = [];
-    
-    onChildAdded(reference, (data) => {
-	const key = data.ref.toString().split("/users/")[1];
-	users.push(key);
-    });
 
-    return users;
+    for (let i = 0; i < firebaseData.length; i++) {
+	users.push(firebaseData[i].username);
+    }
+
+    return users;    
 }
 
 // Push new item to a user's list for a given category

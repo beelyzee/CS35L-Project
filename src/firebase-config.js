@@ -58,7 +58,7 @@ export async function getUsers() {
     const users = [];
 
     for (let i = 0; i < firebaseData.length; i++) {
-	users.push(firebaseData[i].username);
+	if (firebaseData[i].username != null) users.push(firebaseData[i].username);
     }
 
     return users;    
@@ -162,20 +162,6 @@ export function getValueWithKey(key) {
     
     onChildAdded(reference, (snapshot) => {
 	if (paths[3] == snapshot.key)
-	    val = snapshot.val();
-    });
-
-    return val;
-}
-
-// Get username from userID
-export function getUsername(userID) {
-    const db = getDatabase();
-    const reference = ref(db, "users/" + userID);
-    let val = "";
-    
-    onChildAdded(reference, (snapshot) => {
-	if (snapshot.key == "username")
 	    val = snapshot.val();
     });
 

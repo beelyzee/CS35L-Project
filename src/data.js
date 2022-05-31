@@ -32,6 +32,8 @@ export function GetRandomUser() {
 
     const users = load.users;
     const index = Math.floor(Math.random() * users.length);
+
+    console.log(users);
     
     return users[index];
 }

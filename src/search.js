@@ -5,37 +5,42 @@ import { getDatabase, ref, child, get } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import ResponsiveAppBar from "./AppBar";
 import { Button } from "@mui/material";
+import { GetRandomUser } from "./data.js";
 
 const dbRef = ref(getDatabase());
 
 var username = 0;
 
 function Search() {
-	let Navigate = useNavigate();
-	const [inputText, setInputText] = useState("");
-	let inputHandler = (e) => {
-	  //convert input text to lower case
-	  var lowerCase = e.target.value;
-	  setInputText(lowerCase);
-	};
-  
-	return (
-	  <div className="main">
-		  <ResponsiveAppBar />
-		<h1>Find Other Profiles</h1>
-		<div className="search">
-		  <TextField
-			id="outlined-basic"
-			onChange={inputHandler}
-			variant="outlined"
-			fullWidth
-			label="Search"
-		  />
-      </div>
-	  {username = inputText}
-	  <Button onClick={get_data}>Search</Button>
-	  <Button>Generate Random Profile</Button>
-    </div>
+    let Navigate = useNavigate();
+    const [inputText, setInputText] = useState("");
+    let inputHandler = (e) => {
+	//convert input text to lower case
+	var lowerCase = e.target.value;
+	setInputText(lowerCase);
+    };
+
+    const random_user = GetRandomUser();
+    
+    return (
+	<div className="main">
+	    <ResponsiveAppBar />
+	    <h1>Find Other Profiles</h1>
+	    <div className="search">
+		<TextField
+		    id="outlined-basic"
+		    onChange={inputHandler}
+		    variant="outlined"
+		    fullWidth
+		    label="Search"
+		/>
+	    </div>
+	    <div>
+		{username = inputText}
+		<Button key="search-button" onClick={get_data}>Search</Button>
+		<button key="random-button" onClick={console.log(random_user)}>Random</button>
+	    </div>
+	</div>
   );
 
   function get_data() {

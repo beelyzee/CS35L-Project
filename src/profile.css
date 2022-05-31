@@ -29,3 +29,12 @@ h1 {
   height: 1000px;
   background-color: yellow;
 }
+
+.error-message {
+  text-align: center;
+  
+}
+
+ul {
+  list-style-type: none;
+}

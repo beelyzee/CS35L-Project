@@ -197,6 +197,21 @@ export function getUserItemsKey(userID, category, index) {
     return ("users/" + userID + "/" + category + "/" + key);
 }
 
+// Get user's name from uid
+//modified vesion of Cameron's getUserItemsKey
+export function getUsername(userID) {
+  const db = getDatabase();
+  const reference = ref(db, "users/" + userID);
+  let val = "";
+
+  onChildAdded(reference, (snapshot) => {
+    if (snapshot.key == "username")
+      val = snapshot.val();
+  });
+  
+  return (val);
+}
+
 // Push new category to the list of categories
 function writeCategoryData(category) {
     const db = getDatabase();

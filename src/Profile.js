@@ -9,6 +9,7 @@ import ResponsiveAppBar from './AppBar';
 import { getCategories } from './data.js';
 import { useParams } from 'react-router-dom';
 import { auth } from './firebase-config';
+import { getUsername } from './firebase-config';
 
 function Profile() {
 
@@ -16,6 +17,9 @@ function Profile() {
     let UID = userID.substring(1);
   //  console.log(userID); 
   //  console.log(UID);
+
+    
+    const userName = getUsername(UID);
 
     const [editText, setEditText] = useState("Edit");
     const [load, loadState] = useState({
@@ -57,7 +61,7 @@ function Profile() {
             <div className='full-page'>
                 <ResponsiveAppBar />
                 <Edit text={editText} setText={setEditText}/>
-                <h1>FirstName LastName's Profile</h1>
+                <h1>{userName}'s Profile</h1>
                 <div className= 'display-lists'>
 		{lists}
                 </div>
@@ -65,12 +69,30 @@ function Profile() {
             );
     }
 
+    else if (UID == "null" || UID == "" || UID == null){
+        return(
+            <div>
+                <ResponsiveAppBar />
+                <div className='error-message'>
+                <h1>Error: Cannot display profile</h1>
+                <h2>Possible Reasons:</h2>
+                    <ul>
+                        <li>You are trying to view your profile and you are not logged in</li>
+                        <br></br>
+                        <li>You searched for an invalid profile</li>
+                    </ul>
+                </div>
+            </div>
+        );
+    }
+
     else if (id == null || id != UID) {
         console.log({id})
+        console.log({userName})
         return (
             <div className='full-page'>
                 <ResponsiveAppBar />
-                <h1>FirstName LastName's Profile</h1>
+                <h1>{userName}'s Profile</h1>
                 <div className= 'display-lists'>
 		            {lists}
                 </div>

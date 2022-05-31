@@ -20,8 +20,13 @@ function Search() {
 	setInputText(lowerCase);
     };
 
-    const random_user = GetRandomUser();
+	const random_user = GetRandomUser();
     
+	const handleClick = () => {
+		username = random_user;
+		get_data();
+	}
+
     return (
 	<div className="main">
 	    <ResponsiveAppBar />
@@ -37,8 +42,12 @@ function Search() {
 	    </div>
 	    <div>
 		{username = inputText}
-		<Button key="search-button" onClick={get_data}>Search</Button>
-		<button key="random-button" onClick={console.log(random_user)}>Random</button>
+		<br></br>
+		<div className="search-page-buttons">
+			<Button key="search-button" onClick={get_data}>Search</Button> 
+			<br></br>
+			<Button key="random-button" onClick={handleClick}>Generate Random Profile</Button>
+		</div>
 	    </div>
 	</div>
   );

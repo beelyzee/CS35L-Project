@@ -7,6 +7,10 @@
     row-gap: 20px;
 }
 
+.search-page-buttons {
+    text-align: center;
+}
+
 h1 {
     margin: 10px;
     font-size: 40px;

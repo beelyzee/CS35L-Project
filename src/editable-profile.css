@@ -1,3 +1,11 @@
 .edit-items {
     color: beige;
 }
+
+.add-item{
+    text-align: center;
+}
+
+.delete-item {
+    text-align: center;
+}

@@ -99,17 +99,17 @@ function EditableProfile(props) {
 	    const itemKey = getItemKey(props.username, listCategories[i], k);
 	    items.push(
 		<div key={listCategories[i] + "-editable-item-" + itemKey + "-tag-" + listElements[k].title}>	    
-		    <TextField fullWidth defaultValue={listElements[k].title} onChange={e => handleEdit(listCategories[i], k, e.target.value, "title", i)}/>
+		    <TextField placeholder='Item' fullWidth defaultValue={listElements[k].title} onChange={e => handleEdit(listCategories[i], k, e.target.value, "title", i)}/>
 		    <br></br>
-		    <TextField multiline fullWidth defaultValue={listElements[k].description} onChange={e => handleEdit(listCategories[i], k, e.target.value, "description", i)}/>
-		    <Button key={listCategories[i] + "-item-" + itemKey + "-delete-button"} onClick={() => handleDelete(listCategories[i], k)}>Delete previous item</Button>
+		    <TextField  placeholder='Justification' multiline fullWidth defaultValue={listElements[k].description} onChange={e => handleEdit(listCategories[i], k, e.target.value, "description", i)}/>
+		    <div className='delete-item'><Button  key={listCategories[i] + "-item-" + itemKey + "-delete-button"} onClick={() => handleDelete(listCategories[i], k)}>Delete previous item</Button></div>
 		    <br></br>
 		</div>
 	    );
 	}
 
 	items.push(
-	    <div key={"cat-" + i + "-" + listCategories[i] + "-add-item-button-div"}>
+	    <div className='add-item' key={"cat-" + i + "-" + listCategories[i] + "-add-item-button-div"}>
 		<Button key={"category-" + i + "-" + listCategories[i] + "-add-item-button"} onClick={() => handleClick(listCategories[i])}>Add item in {listCategories[i]}</Button>
 	    </div>
 	);

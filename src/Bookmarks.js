@@ -12,6 +12,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import ResponsiveAppBar from './AppBar.js';
+import './bookmarks.css'
 
 import { auth } from './firebase-config';
 
@@ -65,8 +66,8 @@ export default function BookmarksPage(props) {
 		  alignItems="center"
 		  justifyContent="center">
             <Grid item xs={12}>
-		<header className="list-category">Bookmarks</header>
-		{items}
+		<h1 className="bookmarks-title">Bookmarks</h1>
+		<div className='items'>{items}</div>
             </Grid>
 	    </Grid>
 	</Box>

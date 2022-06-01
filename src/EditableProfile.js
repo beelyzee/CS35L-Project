@@ -116,7 +116,7 @@ function EditableProfile(props) {
 	
 	elements.push(
 	    <form name={listCategories[i]}>
-		<h1>{listCategories[i]}</h1>
+		<h1 className='edit-items'>{listCategories[i]}</h1>
 		{items}
 	    </form>
 	);
@@ -124,10 +124,10 @@ function EditableProfile(props) {
     }
     
     return (
-            <div id='test'>
+        <div id='test'>
             <Edit text={props.text} setText={props.setText}/>
             <div className="edit-items">
-	    {elements}
+	    		{elements}
             </div>
         </div>
     );

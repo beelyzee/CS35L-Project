@@ -27,3 +27,14 @@
 .icon-button {
     float: left;
 }
+
+.category {
+    font-family: futura;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin: 40px;
+    font-weight: 500;
+    font-size: xx-large;
+    color: black;
+}
